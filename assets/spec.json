@@ -1,0 +1,12 @@
+{
+  "title": "Founder-Brand Engine",
+  "subtitle": "Voice-aware LinkedIn content from your operating system",
+  "accent_color": "#00D4FF",
+  "tagline_top": "JMC Skill Pack",
+  "demo_steps": [
+    { "duration_ms": 1200, "title": "Capture", "body": "Operator interview transcript to voice corpus" },
+    { "duration_ms": 1200, "title": "Pillars", "body": "Map four Ps: Pillar, Proof, Process, Person" },
+    { "duration_ms": 1200, "title": "Draft",   "body": "LinkedIn-native posts at your cadence" },
+    { "duration_ms": 1200, "title": "Ship",    "body": "Daily distribution from a single source" }
+  ]
+}
