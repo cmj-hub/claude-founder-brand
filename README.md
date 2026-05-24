@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/header.svg" alt="claude-founder-brand — Founder-Brand Compounding" width="100%">
+</p>
+
 # claude-founder-brand
 
 > Replace a $4K-8K/mo ghostwriter with a voice-aware content engine
@@ -12,9 +16,12 @@ Based on the **[JMC Founder-Brand Compounding](https://jaymountconsulting.com/le
 course. No LLM calls inside the skill itself.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/cmj-hub/claude-founder-brand?style=social)](https://github.com/cmj-hub/claude-founder-brand)
 ![Sub-skills](https://img.shields.io/badge/Sub--skills-4-blue)
 ![Scripts](https://img.shields.io/badge/Scripts-1-green)
 ![No LLM inside](https://img.shields.io/badge/LLM--inside-no-success)
+> **Demo GIF coming soon** — install + onboarding + first run walkthrough.
+
 
 ## What it does
 
