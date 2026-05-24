@@ -1,0 +1,58 @@
+{
+  "operator": {
+    "name": "Your Name",
+    "title": "Founder",
+    "company": "Your Company",
+    "linkedin_url": "https://www.linkedin.com/in/yourname"
+  },
+
+  "audience": {
+    "primary_icp": "B2B founders / GTM operators evaluating outbound and demand-gen approaches",
+    "what_they_already_know": "they have a pipeline gap; some have tried agencies; most are skeptical of AI SDRs",
+    "what_they_don't_know_yet": "that the JMC framework anchors on PSPs not demographics"
+  },
+
+  "pillars": {
+    "pillar": {
+      "topic_pool": [
+        "Why most outbound programs fail at the PSP layer, not the SDR layer",
+        "The Schwartz model and why B2B copy ignores it",
+        "What 'compounding' actually means in GTM"
+      ]
+    },
+    "proof": {
+      "topic_pool": [
+        "Series-B SaaS hit 14 SQLs in 30 days from a PSP rewrite",
+        "Bootstrapped agency went 2% → 11% reply rate by killing demographic targeting",
+        "DevTools company closed $80k ACV in 90 days after EVP retier"
+      ]
+    },
+    "process": {
+      "topic_pool": [
+        "The 5-component PSP framework",
+        "How to mine buyer vocabulary in 30 minutes",
+        "The 15-point pre-campaign deliverability check"
+      ]
+    },
+    "person": {
+      "topic_pool": [
+        "Why I refuse to write 'Hope you're well'",
+        "What I learned from shipping 3 outbound programs that failed",
+        "The exec hire that taught me about felt-pain vs buying-authority"
+      ]
+    }
+  },
+
+  "cadence": {
+    "posts_per_week": 4,
+    "rotation_order": ["pillar", "proof", "process", "person"],
+    "default_platform": "linkedin",
+    "auto_critique_before_post": true
+  },
+
+  "business_outcomes": {
+    "drive_to": "https://jaymountconsulting.com/operator-pass",
+    "lead_magnet": "https://jaymountconsulting.com/resources/prompt-library",
+    "call_url": "https://jaymountconsulting.com/growth-audit"
+  }
+}

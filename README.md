@@ -1,42 +1,66 @@
 # claude-founder-brand
 
-A Claude Code skill for building a **compounding personal brand** as a
-B2B founder. LinkedIn-native posts on the 4-pillar framework (Pillar /
-Proof / Process / Person), 12-week content engine planning, and draft
-critique against the JMC voice rubric.
+> Replace a $4K-8K/mo ghostwriter with a voice-aware content engine
+> you control.
 
-No thought-leader voice. No LinkedIn-influencer cadence. No
-AI-detection signals. Just the founder voice that actually pulls
-demand.
+LinkedIn-native posts on the **Pillar / Proof / Process / Person**
+4-pillar framework. 12-week content engine planning. Draft critique
+against the JMC voice rubric — refuses thought-leader voice, refuses
+LinkedIn-influencer cadence, refuses AI-detection signals.
 
-Based on the **[Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)**
-course from The Compounding Engine.
+Based on the **[JMC Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)**
+course. No LLM calls inside the skill itself.
 
-## The framework
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Sub-skills](https://img.shields.io/badge/Sub--skills-4-blue)
+![Scripts](https://img.shields.io/badge/Scripts-1-green)
+![No LLM inside](https://img.shields.io/badge/LLM--inside-no-success)
 
-**4 content pillars** rotated weekly:
+## What it does
 
-| # | Pillar | Job |
-|---|---|---|
-| 1 | **Pillar** | Big claim / point of view / contrarian take |
-| 2 | **Proof** | Case study / specific metric / receipt |
-| 3 | **Process** | How you actually do the work / SOP |
-| 4 | **Person** | The human behind the work — story, stake, why you care |
+```mermaid
+graph LR
+    A[/founder-brand] --> B{Kickoff: state check}
+    B -->|First time| C[Onboarding<br/>voice + 4 pillars]
+    B -->|Have config| D[Content / LinkedIn-craft]
+    C --> D
+    D --> E[Score Post<br/>script]
+    E -->|≥70| F[Operator publishes]
+    E -->|<70| D
 
-**5 hook archetypes** — every post's opening line does one of these:
+    style C fill:#1a1a2e,stroke:#00d4ff
+    style E fill:#1a1a2e,stroke:#cc4714
+```
 
-1. Contrarian
-2. Specific receipt
-3. Confession
-4. Pattern observation
-5. Question reframe
+## The 4 sub-skills
 
-## Sub-skills
-
-| Sub-skill | Job |
+| Sub-skill | What it does |
 |---|---|
-| `founder-content` | Generate a single post on a specific pillar with one of the 5 hooks |
-| `linkedin-craft` | LinkedIn-specific format, hook generation, draft critique |
+| `founder-brand-kickoff` | Adaptive router — detects state (brand-config? voice fingerprints? stories reservoir? this week's queue?) |
+| `founder-brand-onboarding` | 15-min interactive setup → brand-config.json + SOUL.md with voice + 4-pillar pools |
+| `founder-content` | Generate a single LinkedIn post on a specific pillar with 1 of 5 hook archetypes |
+| `linkedin-craft` | LinkedIn-specific format, hook variants, draft critique |
+
+## The deterministic script
+
+| Script | Job |
+|---|---|
+| `scripts/score_post.py` | Score any post 0-100 across 6 axes (hook strength, specificity, voice fingerprints, anti-patterns, format-for-skim, receipt presence). Catches AI-detection phrases ("delve into", "in today's fast-paced world"), engagement bait ("What's your take?"), thought-leader voice ("Stop. Read this."), and operator's own banned list. |
+
+Verified:
+- Strong founder-voice post → 96/100 (caught contrarian hook + receipts + format)
+- AI-pattern post with "delve into" + "fast-paced world" + "What's your take?" → 40/100
+
+## The 3-tier config
+
+```
+brand-config.json   ← Audience + 4-pillar topic pools + cadence + drive-to URLs
+SOUL.md             ← Voice in 3 sentences + phrases-I-use + phrases-I-refuse + stories reservoir
+AGENTS.md           ← Refuses generic posts, refuses engagement bait, refuses fabricated receipts
+```
+
+**The skill refuses to generate posts without SOUL.md.** The whole
+point is sounding like YOU.
 
 ## Install
 
@@ -53,72 +77,49 @@ course from The Compounding Engine.
 curl -fsSL https://raw.githubusercontent.com/cmj-hub/claude-founder-brand/main/install.sh | bash
 ```
 
-## Usage
+## The 4-pillar framework
 
-```
-> Write a Proof pillar post — Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite
-```
+| Pillar | Job | Example |
+|---|---|---|
+| **Pillar** | Big claim / POV / contrarian | "Most outbound programs blame the SDRs. The real issue is upstream." |
+| **Proof** | Case study / metric / receipt | "Series-B SaaS hit 14 SQLs in 30 days from a PSP rewrite." |
+| **Process** | How you do the work / SOP | "Our 7-step PSP construction, with the 3 places teams get stuck." |
+| **Person** | Human story / stake | "I shipped 3 outbound programs that failed before I figured out the PSP layer." |
 
-Claude generates a LinkedIn-native post with:
+Rotate weekly. Don't do all four in one week.
 
-- 1-sentence hook (matches one of the 5 archetypes)
-- Single-line body sentences (scannable)
-- Receipt block with specific numbers
-- 1-line close (no engagement bait)
-- ≤3 hashtags
+## The 5 hook archetypes
 
-Or:
+Every first line does one of these:
 
-```
-> Plan my 12-week content engine
-```
+1. **Contrarian** — "Most teams do X. The lever is actually Y."
+2. **Specific receipt** — "<Metric>: <number> in <timeframe>. The lever wasn't <obvious>."
+3. **Confession** — "I used to think X. After N failed attempts I figured out Y."
+4. **Pattern observation** — "I've reviewed N <thing>. One pattern keeps showing up."
+5. **Question reframe** — "Stop asking <usual Q>. Ask <better Q> instead."
 
-Claude walks you through capturing your 4-pillar material, then builds
-a 12-week (52-post) rotation with hook archetype, topic, and
-business-outcome connection per post.
+If your first line doesn't match one of these, the skill flags it.
 
-Or:
+## Cost arbitrage
 
-```
-> Critique this LinkedIn draft: [paste]
-```
+| Role | $ range | What you'd outsource |
+|---|---|---|
+| LinkedIn ghostwriter (mid) | $4K-8K/mo | 8-12 posts/month |
+| Personal brand agency | $8K-15K/mo | Full content engine + community management |
+| Content strategist | $10K-20K/mo | Strategy + writing + posting |
 
-Claude returns a voice score (0-100), the single weakest line + rewrite,
-and any anti-pattern flags.
-
-## Voice rubric (what makes it sound like a founder)
-
-1. **Specificity over generality.** "14 SQLs in 30 days" beats "great results."
-2. **One claim per post.** Stacked claims dilute.
-3. **First-person, present-tense, conversational.**
-4. **A real receipt every time.** No abstract "here's how" without showing the actual receipt.
-5. **No closer-line bullshit.** No "Thoughts?" / "Agree?" / "What's been your experience?"
-6. **Format for skim.** 1-sentence opener. 1-line body lines. Bullets. White space.
-
-## Voice anti-patterns (skill refuses)
-
-- "Thought leadership" voice (capital-T thinking, no specifics)
-- LinkedIn-influencer cadence ("Stop. Read this. Slowly.")
-- AI-detection signals ("delve into", "navigate the landscape", "in today's fast-paced world")
-- Hook-as-listicle without specifics
-- Engagement bait closers
-- Generic gratitude posts
-- Multi-emoji blocks
-- Hashtag stacks
+This skill produces drafts in your voice. You publish. It does NOT
+replace the doing (you still have to live the stories). It DOES
+replace the writing-by-someone-else-who-doesn't-sound-like-you
+problem that ghostwriting solves badly.
 
 ## Plugs into
 
-- **[claude-psp](https://github.com/cmj-hub/claude-psp)** — Process pillar content often maps to PSP insights
-- **[claude-cold-email](https://github.com/cmj-hub/claude-cold-email)** — Process pillar content makes great PSP / framework / sequence assets
-- **[claude-evp](https://github.com/cmj-hub/claude-evp)** — Pillar pillar (the big claim) is often a Tier 2 EVP reformatted
+- **[cmj-hub/claude-psp](https://github.com/cmj-hub/claude-psp)** — Process pillar content often maps to PSP work
+- **[cmj-hub/claude-evp](https://github.com/cmj-hub/claude-evp)** — Pillar pillar (big claims) is often a Tier 2 EVP reformatted
+- **[cmj-hub/claude-cold-email](https://github.com/cmj-hub/claude-cold-email)** — Proof pillar content makes great cold-email opener material
 
 ## Course
-
-This skill is the agent-form of the **Founder-Brand Compounding**
-course. The full course covers 12-week content engine design,
-per-pillar production cadences, drive-to-business mechanics (post →
-lead magnet → call), format-by-platform, and why post #100 is 10x the
-lever of post #10.
 
 → [jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)
 
