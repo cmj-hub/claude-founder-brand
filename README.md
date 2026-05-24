@@ -20,7 +20,9 @@ course. No LLM calls inside the skill itself.
 ![Sub-skills](https://img.shields.io/badge/Sub--skills-4-blue)
 ![Scripts](https://img.shields.io/badge/Scripts-1-green)
 ![No LLM inside](https://img.shields.io/badge/LLM--inside-no-success)
-> **Demo GIF coming soon** — install + onboarding + first run walkthrough.
+<p align="center">
+  <img src="./assets/demo.gif" alt="claude-founder-brand — terminal demo of the founder-brand onboarding" width="100%">
+</p>
 
 
 ## What it does
