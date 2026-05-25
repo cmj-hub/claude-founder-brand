@@ -1,12 +1,24 @@
 {
-  "title": "Founder-Brand Engine",
-  "subtitle": "Voice-aware LinkedIn content from your operating system",
+  "title": "Founder-Brand Compounding",
+  "subtitle": "LinkedIn-native posts on the 4-pillar framework",
   "accent_color": "#00D4FF",
   "tagline_top": "JMC Skill Pack",
-  "demo_steps": [
-    { "duration_ms": 1200, "title": "Capture", "body": "Operator interview transcript to voice corpus" },
-    { "duration_ms": 1200, "title": "Pillars", "body": "Map four Ps: Pillar, Proof, Process, Person" },
-    { "duration_ms": 1200, "title": "Draft",   "body": "LinkedIn-native posts at your cadence" },
-    { "duration_ms": 1200, "title": "Ship",    "body": "Daily distribution from a single source" }
-  ]
+  "command": "/founder-brand",
+  "user_prompt": "draft a Process pillar post",
+  "response_lines": [
+    "Loading voice rubric + 4-pillar map...",
+    "Pillar: Process · cadence: 1 of 3 this week",
+    "Drafting against rubric (no thought-leader voice)",
+    "Scoring AI-detection signals + JMC voice fit...",
+    "Post ready · voice 82 · AI-signal 0.08"
+  ],
+  "artifact": {
+    "label": "posts/2026-05-25-process.md",
+    "lines": [
+      "Most founders run discovery calls like job",
+      "interviews. Wrong frame. Run them like a",
+      "doctor's intake. Three diagnostic questions",
+      "beat thirty rapport-building ones."
+    ]
+  }
 }

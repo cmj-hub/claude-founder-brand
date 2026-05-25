@@ -29,7 +29,7 @@ course. No LLM calls inside the skill itself.
 
 ```mermaid
 graph LR
-    A[/founder-brand] --> B{Kickoff: state check}
+    A["/founder-brand"] --> B{Kickoff: state check}
     B -->|First time| C[Onboarding<br/>voice + 4 pillars]
     B -->|Have config| D[Content / LinkedIn-craft]
     C --> D
