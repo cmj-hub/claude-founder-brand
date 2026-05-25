@@ -1,4 +1,5 @@
 {
+  "renderer_version": 2,
   "title": "Founder-Brand Compounding",
   "subtitle": "LinkedIn-native posts on the 4-pillar framework",
   "accent_color": "#00D4FF",
@@ -7,10 +8,10 @@
   "user_prompt": "draft a Process pillar post",
   "response_lines": [
     "Loading voice rubric + 4-pillar map...",
-    "Pillar: Process · cadence: 1 of 3 this week",
+    "Pillar: Process \u00b7 cadence: 1 of 3 this week",
     "Drafting against rubric (no thought-leader voice)",
     "Scoring AI-detection signals + JMC voice fit...",
-    "Post ready · voice 82 · AI-signal 0.08"
+    "Post ready \u00b7 voice 82 \u00b7 AI-signal 0.08"
   ],
   "artifact": {
     "label": "posts/2026-05-25-process.md",
