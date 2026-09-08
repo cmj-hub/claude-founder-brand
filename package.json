@@ -1,0 +1,46 @@
+{
+  "name": "jmc-founder-brand",
+  "version": "0.3.0",
+  "description": "Founder-brand compounding is a four-pillar rotation \u2014 Pillar, Proof, Process, Person \u2014 written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
+  "license": "MIT",
+  "bin": {
+    "jmc-founder-brand": "./install.sh"
+  },
+  "scripts": {
+    "install-skills": "npx -y skills add cmj-hub/claude-founder-brand --all -g --copy --full-depth",
+    "smoke": "bash scripts/smoke-test.sh"
+  },
+  "files": [
+    "skills",
+    "founder-brand",
+    "scripts",
+    "examples",
+    "AGENTS.md",
+    "SOUL.md",
+    "brand-config.example.json",
+    "README.md",
+    "LICENSE",
+    "install.sh"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmj-hub/claude-founder-brand.git"
+  },
+  "homepage": "https://jaymountconsulting.com/skills",
+  "bugs": {
+    "url": "https://github.com/cmj-hub/claude-founder-brand/issues"
+  },
+  "keywords": [
+    "agent-skills",
+    "claude-code",
+    "cursor",
+    "codex",
+    "grok",
+    "linkedin",
+    "founder-brand",
+    "b2b"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
