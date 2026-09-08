@@ -1,17 +1,18 @@
 <p align="center">
-  <img src="./assets/header.svg" alt="claude-founder-brand — four-pillar founder-led social" width="100%">
+  <img src="./assets/header.svg" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
 </p>
 
 # claude-founder-brand
 
-> A ghostwriter writes like a ghostwriter. This pack refuses that cadence on purpose.
+> "In today's fast-paced world, what's your take?" is not a founder post. A named receipt is.
 
 Founder-brand compounding is a four-pillar rotation — Pillar, Proof, Process, Person — written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.
 
-"In today's fast-paced world, let me delve into…" scored **37**.
-A Proof post with a named receipt — Series-B, 14 SQLs, 30 days — scored **96**.
+You have paid a ghostwriter who does not sound like you. Or you have stared at a blank LinkedIn box and written "3 things I learned this week" because the feed rewards it. The feed also trains a reader to skip you.
 
-The scorer is Python in this repo. No LLM. No paid API.
+The mechanism is the rotation plus a scorer. Pillar is the claim. Proof is the receipt. Process is how you actually do the work. Person is why you care. Skip a pillar for a month and the feed forgets which one you are.
+
+A Proof post with a named receipt — Series-B, 14 SQLs, 30 days — scored **96**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scored **37**. `scripts/score_post.py` is Python. No LLM. No paid API.
 
 The build guide teaches the framework to a human. This pack teaches the same framework to an agent.
 
@@ -21,12 +22,16 @@ The build guide teaches the framework to a human. This pack teaches the same fra
 ![Install](https://img.shields.io/badge/install-npx%20skills-blue)
 
 <p align="center">
-  <img src="./assets/demo.gif" alt="claude-founder-brand — terminal demo of scoring a Proof post" width="100%">
+  <img src="./assets/demo.gif" alt="claude-founder-brand — scoring a Proof post 96 vs an AI-pattern post 37" width="100%">
 </p>
+
+## What this replaces
+
+A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the stories. The pack writes in the voice you actually use.
 
 ## Install
 
-Two commands. Claude Code, Cursor, Codex, Grok, Copilot, Windsurf, Cline, OpenCode, and the rest of the [skills CLI](https://skills.sh) list.
+Two commands. Works in Claude Code, Cursor, Codex, Grok, Copilot, Windsurf, Cline, OpenCode, and the rest of the [skills CLI](https://skills.sh) list.
 
 ```bash
 npx skills add cmj-hub/claude-founder-brand --all -g --full-depth
@@ -52,27 +57,21 @@ One Proof post from the sample receipt. Then yours — from a fact that actually
 
 ## What this pack will not do
 
-It will not post for you.
-It will not fill a 12-week calendar on the first run.
-It will not invent a receipt.
+It will not post for you. It will not fill a 12-week calendar on the first run. It will not invent a receipt.
 
 This pack drafts and scores. It will not pick this quarter's PSP, ingest your CRM, or update when Gmail changes the spam window. That is the course + Operator Pass: the catalog that keeps moving, the tools that stay calibrated, the Friday room where you bring the artifact.
 
 ## Will this sound like LinkedIn thought leadership?
 
-No. The scorer flags "Stop. Read this.", "What's your take?", "delve into", and "in today's fast-paced world".
-A real receipt is required. That is a refuse, not a style.
+No. The scorer flags "Stop. Read this.", "What's your take?", "delve into", and "in today's fast-paced world". A real receipt is required. That is a refuse, not a style.
 
 ## Does it post for me?
 
-No. It drafts and scores. You publish.
+No. It drafts and scores. You publish. Auto-posting is not the job. Sounding like you is.
 
 ## What is a receipt?
 
-A named, checkable fact.
-"Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite."
-Not "great results."
-Proof posts without a receipt fail.
+A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite." Not "great results." Proof posts without a receipt fail the scorer.
 
 ## Suite, course, Operator Pass
 
@@ -84,10 +83,10 @@ Founder: $97/mo billed annually ($1,164/yr), locked for life if bought before Oc
 
 ## Companion packs
 
-- [claude-psp](https://github.com/cmj-hub/claude-psp) — five-part buying brief
-- [claude-evp](https://github.com/cmj-hub/claude-evp) — 22-word line per Schwartz tier
+- [claude-psp](https://github.com/cmj-hub/claude-psp) — Pain Signal Profile, the five-part buying brief
+- [claude-evp](https://github.com/cmj-hub/claude-evp) — 22-word Early Value Proposition per Schwartz tier
 - [claude-cold-email](https://github.com/cmj-hub/claude-cold-email) — signal, pain, EVP, binary ask
-- [claude-pricing](https://github.com/cmj-hub/claude-pricing) — three-tier contrast + pocket-price leaks
+- [claude-pricing](https://github.com/cmj-hub/claude-pricing) — three-tier contrast and pocket-price leaks
 
 ## License
 
