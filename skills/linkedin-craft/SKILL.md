@@ -104,4 +104,3 @@ the strongest.
 
 - `../../founder-brand/SKILL.md` — the full framework + voice rubric
 - The **Founder-Brand Compounding** course:
-  [jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)

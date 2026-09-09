@@ -138,4 +138,3 @@ course in The Compounding Engine. The course covers:
 - Format-by-platform (LinkedIn / X / Threads / podcast / newsletter)
 - The "compounding" framework — why post #100 is 10x the lever of post #10
 
-→ **[jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)**

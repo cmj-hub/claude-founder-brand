@@ -127,4 +127,3 @@ If the user requests one, push back with the JMC alternative.
 
 - `../../founder-brand/SKILL.md` — the framework
 - The **Founder-Brand Compounding** course:
-  [jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)
