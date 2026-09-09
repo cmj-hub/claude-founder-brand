@@ -86,6 +86,8 @@ A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite."
 
 That one does ask for an email, and it enrols you in a short follow-up on the same topic. Unsubscribe whenever.
 
+[**The Friday Signal**](https://jaymountconsulting.com/newsletter/signal) — one free edition a week on building GTM systems that compound. No pitch in it.
+
 
 ## Companion packs
 
