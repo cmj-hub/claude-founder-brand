@@ -1,5 +1,27 @@
-{ "renderer_version": 3, "title": "Founder-Brand Compounding",
+{
+  "renderer_version": 3,
+  "title": "Founder-Brand Compounding",
   "subtitle": "Four pillars. It refuses thought-leader cadence.",
-  "accent_color": "#8B5CF6", "tagline_top": "JMC Skill Pack",
+  "accent_color": "#8B5CF6",
+  "tagline_top": "JMC Skill Pack",
   "proof": "score_post.py · voice 82 · AI-signal 0.08 · no LLM",
-  "cta": "jaymountconsulting.com/tools/linkedin-post-critic" }
+  "cta": "jaymountconsulting.com/tools/linkedin-post-critic",
+  "command": "/founder-brand",
+  "user_prompt": "draft a Process pillar post",
+  "response_lines": [
+    "Loading voice rubric + 4-pillar map...",
+    "Pillar: Process · cadence: 1 of 3 this week",
+    "Drafting against rubric (no thought-leader voice)",
+    "Scoring AI-detection signals + JMC voice fit...",
+    "Post ready · voice 82 · AI-signal 0.08"
+  ],
+  "artifact": {
+    "label": "posts/2026-05-25-process.md",
+    "lines": [
+      "Most founders run discovery calls like job",
+      "interviews. Wrong frame. Run them like a",
+      "doctor's intake. Three diagnostic questions",
+      "beat thirty rapport-building ones."
+    ]
+  }
+}
