@@ -2,10 +2,10 @@
 name: linkedin-craft
 description: LinkedIn-native post construction — format for skim (1-sentence opener, single-line body, bulleted receipt, no engagement bait), generate 5 hook variants across the 5 hook archetypes (contrarian, specific receipt, confession, pattern observation, question reframe), and critique a draft for voice + anti-pattern compliance. Loaded by the main founder-brand skill for LinkedIn-specific work.
 user-invocable: false
-allowed-tools:
-  - Read
-  - Write
+allowed-tools: Read Write
   - Grep
+license: MIT
+
 ---
 
 # LinkedIn Craft — sub-skill
@@ -104,4 +104,3 @@ the strongest.
 
 - `../../founder-brand/SKILL.md` — the full framework + voice rubric
 - The **Founder-Brand Compounding** course:
-  [jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)

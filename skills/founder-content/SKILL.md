@@ -2,10 +2,10 @@
 name: founder-content
 description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes. Self-checks against the JMC voice rubric and banned-patterns list before delivering. Loaded by the main founder-brand skill when the user wants to write a single post.
 user-invocable: false
-allowed-tools:
-  - Read
-  - Write
+allowed-tools: Read Write
   - Grep
+license: MIT
+
 ---
 
 # Founder Content — sub-skill
@@ -127,4 +127,3 @@ If the user requests one, push back with the JMC alternative.
 
 - `../../founder-brand/SKILL.md` — the framework
 - The **Founder-Brand Compounding** course:
-  [jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)

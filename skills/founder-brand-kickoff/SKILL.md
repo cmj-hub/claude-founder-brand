@@ -2,9 +2,10 @@
 name: founder-brand-kickoff
 description: Adaptive router for the founder-brand skill pack. Detects state (brand-config? SOUL? pillars filled? cadence set? recent posts logged?) and picks the next-best step. Loaded by the main founder-brand skill on bare invocation.
 user-invocable: false
-allowed-tools:
-  - Read
+allowed-tools: Read
   - Grep
+license: MIT
+
 ---
 
 # Founder-Brand Kickoff — adaptive router

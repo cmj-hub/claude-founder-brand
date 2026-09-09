@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/header.svg" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
+  <img src="./assets/header.png" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
 </p>
 
 # claude-founder-brand
@@ -18,6 +18,7 @@ The build guide teaches the framework to a human. This pack teaches the same fra
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/cmj-hub/claude-founder-brand?style=social)](https://github.com/cmj-hub/claude-founder-brand)
+[![skills.sh](https://skills.sh/b/cmj-hub/claude-founder-brand)](https://skills.sh/cmj-hub/claude-founder-brand)
 ![No paid APIs](https://img.shields.io/badge/paid%20APIs-none-success)
 ![Install](https://img.shields.io/badge/install-npx%20skills-blue)
 
@@ -59,7 +60,7 @@ One Proof post from the sample receipt. Then yours — from a fact that actually
 
 It will not post for you. It will not fill a 12-week calendar on the first run. It will not invent a receipt.
 
-This pack drafts and scores. It will not pick this quarter's PSP, ingest your CRM, or update when Gmail changes the spam window. That is the course + Operator Pass: the catalog that keeps moving, the tools that stay calibrated, the Friday room where you bring the artifact.
+This pack drafts and scores. It will not pick this quarter's PSP, ingest your CRM, or update when Gmail changes the spam window. Those are judgement calls and live data. This pack gives you the instrument and the rubric; you bring the account.
 
 ## Will this sound like LinkedIn thought leadership?
 
@@ -73,13 +74,20 @@ No. It drafts and scores. You publish. Auto-posting is not the job. Sounding lik
 
 A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite." Not "great results." Proof posts without a receipt fail the scorer.
 
-## Suite, course, Operator Pass
+## Free, no signup
 
-- Suite: [gtm-operator-skills](https://github.com/cmj-hub/gtm-operator-skills) · [jaymountconsulting.com/skills](https://jaymountconsulting.com/skills)
-- Course: [Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)
-- Operator Pass: [jaymountconsulting.com/operator-pass](https://jaymountconsulting.com/operator-pass)
+- **[LinkedIn Post Critic](https://jaymountconsulting.com/tools/linkedin-post-critic)** — the same job as this pack, hosted. No account, no key.
+- [Founder-Led Social Selling framework](https://jaymountconsulting.com/frameworks/founder-led-social-selling)
+- [Prompt Library](https://jaymountconsulting.com/resources/prompt-library)
 
-Founder: $97/mo billed annually ($1,164/yr), locked for life if bought before October 31, 2026. After that: $197/mo billed annually ($2,364/yr), no lock.
+## Free, by email
+
+[**Demand Discovery Scorecard**](https://jaymountconsulting.com/demand-discovery-scorecard) — where your demand surface actually stands, sent to your inbox.
+
+That one does ask for an email, and it enrols you in a short follow-up on the same topic. Unsubscribe whenever.
+
+[**The Friday Signal**](https://jaymountconsulting.com/newsletter/signal) — one free edition a week on building GTM systems that compound. No pitch in it.
+
 
 ## Companion packs
 
@@ -95,3 +103,12 @@ MIT. See [LICENSE](./LICENSE).
 ## About
 
 Built by [Jay Mount Consulting](https://jaymountconsulting.com).
+
+## Regenerating the artwork
+
+`assets/social-preview.png` and `assets/header.png` are generated from `assets/spec.json` by a vendored renderer — no CI, no shared workflow, no network beyond the webfonts:
+
+```bash
+node assets/card.mjs assets/spec.json assets/          # social-preview.png + header.png
+npm i playwright-core && node assets/demo.mjs assets/spec.json assets/demo.gif
+```

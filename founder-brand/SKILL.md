@@ -11,10 +11,10 @@ description: >
   Compounding course. Triggers on: "founder content", "LinkedIn post",
   "founder-led social", "personal brand", "linkedin strategy", "content
   pillar", "founder voice", "content engine", "B2B social".
-allowed-tools:
-  - Read
-  - Write
+allowed-tools: Read Write
   - Grep
+license: MIT
+
 ---
 
 # Founder Brand — Founder-Led Social System
@@ -138,4 +138,3 @@ course in The Compounding Engine. The course covers:
 - Format-by-platform (LinkedIn / X / Threads / podcast / newsletter)
 - The "compounding" framework — why post #100 is 10x the lever of post #10
 
-→ **[jaymountconsulting.com/learn/courses/founder-brand-compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding)**
