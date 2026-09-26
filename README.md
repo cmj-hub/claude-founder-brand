@@ -82,7 +82,7 @@ A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite."
 
 ## Free, by email
 
-[**Demand Discovery Scorecard**](https://jaymountconsulting.com/demand-discovery-scorecard) — where your demand surface actually stands, sent to your inbox.
+[**Growth Audit**](https://jaymountconsulting.com/growth-audit) — where your go-to-market stack is leaking, sent to your inbox.
 
 That one does ask for an email, and it enrols you in a short follow-up on the same topic. Unsubscribe whenever.
 
