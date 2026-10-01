@@ -27,6 +27,62 @@ from dataclasses import dataclass, field, asdict
 from typing import List, Optional
 
 
+MAX_INPUT_BYTES = 2_000_000
+
+
+def fail_input(message: str) -> None:
+    print(f"error: {message}", file=sys.stderr)
+    raise SystemExit(2)
+
+
+def read_text(path: str) -> str:
+    try:
+        with open(path, "rb") as handle:
+            raw = handle.read(MAX_INPUT_BYTES + 1)
+    except IsADirectoryError:
+        fail_input(f"not a file: {path}")
+    except FileNotFoundError:
+        fail_input(f"file not found: {path}")
+    except OSError:
+        fail_input(f"cannot read file: {path}")
+    if len(raw) > MAX_INPUT_BYTES:
+        fail_input(f"file is too large: {path}")
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raw = raw[3:]
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        fail_input(f"file is not UTF-8 text: {path}")
+
+
+def parse_json(text: str) -> dict:
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        fail_input("invalid JSON")
+    if not isinstance(data, dict):
+        fail_input("JSON must be an object")
+    return data
+
+
+def read_stdin_text() -> str:
+    raw = sys.stdin.buffer.read(MAX_INPUT_BYTES + 1)
+    if len(raw) > MAX_INPUT_BYTES:
+        fail_input("input is too large")
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raw = raw[3:]
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        fail_input("input is not UTF-8 text")
+
+
+def _phrases(value: object) -> list:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str)]
+
+
 # AI-detection signals — high-confidence "this was written by an LLM" phrases.
 AI_DETECTION_PHRASES = [
     "delve into", "delve deeper", "navigate the landscape",
@@ -322,12 +378,8 @@ def format_text(s: PostScore) -> str:
 
 
 def parse_soul_md(path: str) -> tuple:
-    """Best-effort extraction of phrases-I-use / phrases-I-refuse from SOUL.md."""
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            text = f.read()
-    except FileNotFoundError:
-        return [], []
+    """Extract phrases-I-use / phrases-I-refuse from SOUL.md."""
+    text = read_text(path)
 
     used = []
     refused = []
@@ -353,14 +405,12 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.stdin:
-        try:
-            data = json.load(sys.stdin)
-        except json.JSONDecodeError as err:
-            print(f"Bad JSON: {err}", file=sys.stderr)
-            return 2
+        data = parse_json(read_stdin_text())
         post = data.get("post", "")
-        used = data.get("phrases_used", [])
-        refused = data.get("phrases_refused", [])
+        if not isinstance(post, str):
+            post = ""
+        used = _phrases(data.get("phrases_used", []))
+        refused = _phrases(data.get("phrases_refused", []))
     else:
         post = args.post
         if args.soul:
