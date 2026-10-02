@@ -1,27 +1,26 @@
 {
   "renderer_version": 3,
-  "title": "Founder-Brand Compounding",
-  "subtitle": "Four pillars. It refuses thought-leader cadence.",
+  "title": "LinkedIn posts",
+  "subtitle": "Posts a buyer can tell came from the operator.",
   "accent_color": "#8B5CF6",
   "tagline_top": "JMC Skill Pack",
-  "proof": "score_post.py · voice 82 · AI-signal 0.08 · no LLM",
+  "proof": "score_post.py \u00b7 proof post 96 \u00b7 AI-pattern 37 \u00b7 no LLM",
   "cta": "jaymountconsulting.com/tools/linkedin-post-critic",
   "command": "/founder-brand",
-  "user_prompt": "draft a Process pillar post",
+  "user_prompt": "score examples/proof.good.md",
   "response_lines": [
-    "Loading voice rubric + 4-pillar map...",
-    "Pillar: Process · cadence: 1 of 3 this week",
-    "Drafting against rubric (no thought-leader voice)",
-    "Scoring AI-detection signals + JMC voice fit...",
-    "Post ready · voice 82 · AI-signal 0.08"
+    "Scoring examples/proof.good.md",
+    "Hook: contrarian \u00b7 receipt present",
+    "Proof post scored 96",
+    "AI-pattern post scored 37",
+    "No LLM \u00b7 no paid API"
   ],
   "artifact": {
-    "label": "posts/2026-05-25-process.md",
+    "label": "examples/proof.good.md",
     "lines": [
-      "Most founders run discovery calls like job",
-      "interviews. Wrong frame. Run them like a",
-      "doctor's intake. Three diagnostic questions",
-      "beat thirty rapport-building ones."
+      "Most outbound programs blame the SDRs.",
+      "The real issue is upstream.",
+      "Series-B SaaS, 30 days, 14 SQLs."
     ]
   }
 }

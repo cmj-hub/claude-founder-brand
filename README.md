@@ -26,7 +26,7 @@ The build guide teaches the framework to a human. This pack teaches the same fra
 ![Install](https://img.shields.io/badge/install-npx%20skills-blue)
 
 <p align="center">
-  <img src="./assets/demo.gif" alt="claude-founder-brand — scoring a Proof post 96 vs an AI-pattern post 37" width="100%">
+  <img src="./assets/demo.gif" alt="LinkedIn posts skill — proof post 96, AI-pattern post 37" width="100%">
 </p>
 
 ## What this replaces
