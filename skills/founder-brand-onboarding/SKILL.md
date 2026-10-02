@@ -1,6 +1,7 @@
 ---
 name: founder-brand-onboarding
-description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes. This is THE most important file in the pack — the whole point is sounding like the operator, not ChatGPT.
+description: "Set voice, pillar pools, and cadence before the first post. Use when brand-config or voice notes are missing, and when the next artifact is one post on one network."
+models: ""
 user-invocable: false
 allowed-tools: Read Write
   - Grep
@@ -9,6 +10,12 @@ license: MIT
 ---
 
 # Founder-Brand Onboarding — first-run setup
+
+## Contents
+
+- Activation
+- Workflow
+- Checklist
 
 The most important setup in this pack. The point of founder-brand
 content is that it sounds like YOU. Without SOUL.md, the skill
@@ -200,3 +207,15 @@ Voice evolves. Re-run onboarding when:
 
 Re-run: `/founder-brand onboarding refresh`
 ```
+
+## Checklist
+
+Copy this list and tick it in order.
+
+- [ ] 1. Name one network.
+- [ ] 2. Write one post and one receipt.
+- [ ] 3. Run `python3 scripts/score.py --file draft.json`.
+
+Check again until the script exits 0.
+
+Go back to step 2 if step 3 fails.

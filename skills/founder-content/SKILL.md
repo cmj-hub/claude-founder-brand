@@ -1,6 +1,7 @@
 ---
 name: founder-content
-description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes. Self-checks against the JMC voice rubric and banned-patterns list before delivering. Loaded by the main founder-brand skill when the user wants to write a single post.
+description: "Write one founder post on one pillar with one receipt. Use when the user wants a single post, and when a ten-network blast would be the wrong shape."
+models: ""
 user-invocable: false
 allowed-tools: Read Write
   - Grep
@@ -9,6 +10,14 @@ license: MIT
 ---
 
 # Founder Content — sub-skill
+
+## Contents
+
+- Activation
+- Workflow
+- Banned patterns (always refuse)
+- References
+- Checklist
 
 Generates a single founder-voice LinkedIn post.
 
@@ -126,4 +135,16 @@ If the user requests one, push back with the JMC alternative.
 ## References
 
 - `../../founder-brand/SKILL.md` — the framework
-- The **Founder-Brand Compounding** course:
+- The **Founder-Brand Compounding** course.
+
+## Checklist
+
+Copy this list and tick it in order.
+
+- [ ] 1. Name one network.
+- [ ] 2. Write one post and one receipt.
+- [ ] 3. Run `python3 scripts/score.py --file draft.json`.
+
+Check again until the script exits 0.
+
+Go back to step 2 if step 3 fails.

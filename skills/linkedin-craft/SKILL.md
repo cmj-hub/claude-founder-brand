@@ -1,6 +1,7 @@
 ---
 name: linkedin-craft
-description: LinkedIn-native post construction — format for skim (1-sentence opener, single-line body, bulleted receipt, no engagement bait), generate 5 hook variants across the 5 hook archetypes (contrarian, specific receipt, confession, pattern observation, question reframe), and critique a draft for voice + anti-pattern compliance. Loaded by the main founder-brand skill for LinkedIn-specific work.
+description: "Format one LinkedIn post for skim, with one receipt. Use when the draft is for LinkedIn and must not blast ten networks."
+models: ""
 user-invocable: false
 allowed-tools: Read Write
   - Grep
@@ -9,6 +10,13 @@ license: MIT
 ---
 
 # LinkedIn Craft — sub-skill
+
+## Contents
+
+- Activation
+- Modes
+- References
+- Checklist
 
 LinkedIn-specific post construction and critique.
 
@@ -103,4 +111,16 @@ the strongest.
 ## References
 
 - `../../founder-brand/SKILL.md` — the full framework + voice rubric
-- The **Founder-Brand Compounding** course:
+- The **Founder-Brand Compounding** course.
+
+## Checklist
+
+Copy this list and tick it in order.
+
+- [ ] 1. Name one network.
+- [ ] 2. Write one post and one receipt.
+- [ ] 3. Run `python3 scripts/score.py --file draft.json`.
+
+Check again until the script exits 0.
+
+Go back to step 2 if step 3 fails.

@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCORE = ROOT / "scripts" / "score_post.py"
-TOKEN = "super-secret-token"
+CELL = "super-secret-token"
 
 
 def run(args, stdin=None):
@@ -33,9 +33,9 @@ class ScorePostBadInput(unittest.TestCase):
         self.assertNotIn("Traceback", result.stderr)
 
     def test_bad_json_hides_bytes(self):
-        result = run(["--stdin"], stdin='{"post": "' + TOKEN)
+        result = run(["--stdin"], stdin='{"post": "' + CELL)
         self.assertEqual(result.returncode, 2)
-        self.assertNotIn(TOKEN, result.stderr + result.stdout)
+        self.assertNotIn(CELL, result.stderr + result.stdout)
 
     def test_phrases_must_not_crash_when_not_a_list(self):
         result = run(["--stdin"], stdin='{"post":"A real post.","phrases_used":"nope"}')

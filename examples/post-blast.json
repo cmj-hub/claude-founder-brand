@@ -1,0 +1,6 @@
+{
+  "post": "Same line pasted everywhere.",
+  "network": "LinkedIn",
+  "receipt": "No single-network receipt.",
+  "networks": ["LinkedIn", "X", "Threads", "Facebook", "Instagram", "TikTok", "YouTube", "Reddit", "Bluesky", "Mastodon"]
+}
