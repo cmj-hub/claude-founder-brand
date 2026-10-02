@@ -2,7 +2,9 @@
   <img src="./assets/header.png" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
 </p>
 
-# Social post
+# LinkedIn posts
+
+LinkedIn posts for founders are posts a buyer can tell came from the operator, written from a real receipt.
 
 ## Contents
 
