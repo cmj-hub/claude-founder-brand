@@ -1,6 +1,7 @@
 ---
 name: founder-brand-kickoff
-description: Adaptive router for the founder-brand skill pack. Detects state (brand-config? SOUL? pillars filled? cadence set? recent posts logged?) and picks the next-best step. Loaded by the main founder-brand skill on bare invocation.
+description: "Pick the next step for one social post. Use when brand setup or this week's post is the open question, and when the work must stay on one network."
+models: ""
 user-invocable: false
 allowed-tools: Read
   - Grep
@@ -9,6 +10,15 @@ license: MIT
 ---
 
 # Founder-Brand Kickoff — adaptive router
+
+## Contents
+
+- Activation
+- State detection
+- Welcome flow
+- Weekly mode
+- Status mode
+- Checklist
 
 ## Activation
 
@@ -93,3 +103,15 @@ This week (Mon-Sun): 2 of 4 posts logged
 
 Next: Wednesday — Process pillar slot. Suggestion: "<topic>"
 ```
+
+## Checklist
+
+Copy this list and tick it in order.
+
+- [ ] 1. Name one network.
+- [ ] 2. Write one post and one receipt.
+- [ ] 3. Run `python3 scripts/score.py --file draft.json`.
+
+Check again until the script exits 0.
+
+Go back to step 2 if step 3 fails.

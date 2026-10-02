@@ -2,7 +2,23 @@
   <img src="./assets/header.png" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
 </p>
 
-# claude-founder-brand
+# Social post
+
+## Contents
+
+- What this replaces
+- Install
+- What you walk out with in 15 minutes
+- What this pack will not do
+- Will this sound like LinkedIn thought leadership?
+- Does it post for me?
+- What is a receipt?
+- Free, no signup
+- Free, by email
+- Companion packs
+- License
+- About
+- Regenerating the artwork
 
 > "In today's fast-paced world, what's your take?" is not a founder post. A named receipt is.
 
@@ -92,7 +108,7 @@ That one does ask for an email, and it enrols you in a short follow-up on the sa
 ## Companion packs
 
 - [claude-psp](https://github.com/cmj-hub/claude-psp) — Pain Signal Profile, the five-part buying brief
-- [claude-evp](https://github.com/cmj-hub/claude-evp) — 22-word Early Value Proposition per Schwartz tier
+- [claude-evp](https://github.com/cmj-hub/claude-evp) — 22-word early value proposition per awareness tier
 - [claude-cold-email](https://github.com/cmj-hub/claude-cold-email) — signal, pain, EVP, binary ask
 - [claude-pricing](https://github.com/cmj-hub/claude-pricing) — three-tier contrast and pocket-price leaks
 
@@ -102,7 +118,7 @@ MIT. See [LICENSE](./LICENSE).
 
 ## About
 
-Built by [Jay Mount Consulting](https://jaymountconsulting.com).
+Public MIT pack. The scorer prints one post, one network, and one receipt. It refuses a ten-network blast.
 
 ## Regenerating the artwork
 

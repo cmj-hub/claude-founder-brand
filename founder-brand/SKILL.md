@@ -1,16 +1,7 @@
 ---
 name: founder-brand
-description: >
-  Founder-led social system for B2B founders building a compounding personal
-  brand. Generates LinkedIn-native posts following the Pillar / Proof /
-  Process / Person framework (4 content pillars rotated weekly), plans a 12-
-  week content engine, critiques drafts for the "founder voice" anti-pattern
-  list (no thought-leader voice, no LinkedIn-influencer cadence, no
-  AI-detection signals), and structures content around the 5 hook archetypes
-  that actually pull demand on the JMC framework. Based on the Founder-Brand
-  Compounding course. Triggers on: "founder content", "LinkedIn post",
-  "founder-led social", "personal brand", "linkedin strategy", "content
-  pillar", "founder voice", "content engine", "B2B social".
+description: "Draft one social post for one network with one receipt. Use when a founder is writing a post, and when the draft must not become a ten-network blast."
+models: ""
 allowed-tools: Read Write
   - Grep
 license: MIT
@@ -18,6 +9,20 @@ license: MIT
 ---
 
 # Founder Brand — Founder-Led Social System
+
+## Contents
+
+- Quick reference
+- The framework — 4 content pillars
+- The 5 hook archetypes
+- The voice — what makes it sound like a founder
+- Voice anti-patterns (banned)
+- Workflow
+- Sub-skills
+- Plugs into
+- Course
+- Pack files
+- Checklist
 
 Compounding content engine for B2B founders. Produces LinkedIn-native
 posts on a 4-pillar rotation, plans a 12-week content engine, and
@@ -137,4 +142,27 @@ course in The Compounding Engine. The course covers:
 - Drive-to-business mechanics (post → lead magnet → call)
 - Format-by-platform (LinkedIn / X / Threads / podcast / newsletter)
 - The "compounding" framework — why post #100 is 10x the lever of post #10
+
+## Pack files
+
+- [AGENTS.md](../AGENTS.md)
+- [CHANGELOG.md](../CHANGELOG.md)
+- [CONTRIBUTING.md](../CONTRIBUTING.md)
+- [SOUL.md](../SOUL.md)
+- [bug report](../.github/ISSUE_TEMPLATE/bug_report.md)
+- [feature request](../.github/ISSUE_TEMPLATE/feature_request.md)
+- [good proof](../examples/proof.good.md)
+- [bad proof](../examples/proof.bad.md)
+
+## Checklist
+
+Copy this list and tick it in order.
+
+- [ ] 1. Name one network.
+- [ ] 2. Write one post and one receipt in `draft.json`.
+- [ ] 3. Run `python3 scripts/score.py --file draft.json`.
+
+Check again until the script exits 0.
+
+Go back to step 2 if step 3 fails.
 
