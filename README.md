@@ -1,8 +1,10 @@
 <p align="center">
-  <img src="./assets/header.png" alt="claude-founder-brand — four-pillar founder-led social: Pillar, Proof, Process, Person" width="100%">
+  <img src="./assets/header.png" alt="LinkedIn posts skill for Claude Code" width="100%">
 </p>
 
-# claude-founder-brand
+# LinkedIn posts
+
+LinkedIn posts for founders are posts a buyer can tell came from the operator, written from a real receipt.
 
 > "In today's fast-paced world, what's your take?" is not a founder post. A named receipt is.
 
