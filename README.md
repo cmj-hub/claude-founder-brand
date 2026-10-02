@@ -77,6 +77,12 @@ No. It drafts and scores. You publish. Auto-posting is not the job. Sounding lik
 
 A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite." Not "great results." Proof posts without a receipt fail the scorer.
 
+## On the site
+
+- [Founder Brand pack](https://jaymountconsulting.com/skills/claude-founder-brand) — this pack's page
+- [Skill packs catalog](https://jaymountconsulting.com/skills) — install paths + every pack
+- [Course twin](https://jaymountconsulting.com/learn/courses/founder-brand-compounding) — human build guide for this pack
+
 ## Free, no signup
 
 - **[LinkedIn Post Critic](https://jaymountconsulting.com/tools/linkedin-post-critic)** — the same job as this pack, hosted. No account, no key.
