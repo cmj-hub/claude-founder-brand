@@ -7,7 +7,6 @@
     "jmc-founder-brand": "./install.sh"
   },
   "scripts": {
-    "install-skills": "npx -y skills add cmj-hub/claude-founder-brand --all -g --copy --full-depth",
     "smoke": "bash scripts/smoke-test.sh"
   },
   "files": [
