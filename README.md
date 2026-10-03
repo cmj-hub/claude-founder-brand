@@ -28,30 +28,15 @@ A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the
 
 ## Install
 
-```bash
-skills add cmj-hub/claude-founder-brand --all -g --full-depth
-```
+This pack is the files in this repository. Open the tree on the host you already run. There is no remote installer.
 
-`--all` writes this pack for every host the installer knows. One host:
-
-```bash
-skills add cmj-hub/claude-founder-brand --skill '*' -g --full-depth -y -a claude-code
-```
-
-Swap `claude-code` for `cursor`, `codex`, `grok`, `github-copilot`, `windsurf`, `cline`, or `opencode`.
-
-### Claude Code only
-
-```text
-/plugin marketplace add cmj-hub/gtm-operator-skills
-/plugin install founder-brand
-```
+The scorer is Python in this repo.
 
 ## What you walk out with in 15 minutes
 
 Artifact: `examples/proof.good.md`.
 
-```bash
+```
 python3 scripts/score_post.py --post "$(cat examples/proof.good.md)"
 python3 scripts/score_post.py --post "$(cat examples/proof.bad.md)"
 ```

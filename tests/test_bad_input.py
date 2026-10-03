@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCORE = ROOT / "scripts" / "score_post.py"
-TOKEN = "super-secret-token"
+TOKEN = "incomplete-json-probe"
 
 
 def run(args, stdin=None):
