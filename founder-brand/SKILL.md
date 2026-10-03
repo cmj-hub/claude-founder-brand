@@ -11,8 +11,7 @@ description: >
   Compounding course. Triggers on: "founder content", "LinkedIn post",
   "founder-led social", "personal brand", "linkedin strategy", "content
   pillar", "founder voice", "content engine", "B2B social".
-allowed-tools: Read Write
-  - Grep
+allowed-tools: Read Write Grep
 license: MIT
 
 ---

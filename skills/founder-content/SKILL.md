@@ -2,8 +2,7 @@
 name: founder-content
 description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes. Self-checks against the JMC voice rubric and banned-patterns list before delivering. Loaded by the main founder-brand skill when the user wants to write a single post.
 user-invocable: false
-allowed-tools: Read Write
-  - Grep
+allowed-tools: Read Write Grep
 license: MIT
 
 ---

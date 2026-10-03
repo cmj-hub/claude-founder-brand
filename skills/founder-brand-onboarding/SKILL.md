@@ -2,8 +2,7 @@
 name: founder-brand-onboarding
 description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes. This is THE most important file in the pack — the whole point is sounding like the operator, not ChatGPT.
 user-invocable: false
-allowed-tools: Read Write
-  - Grep
+allowed-tools: Read Write Grep
 license: MIT
 
 ---

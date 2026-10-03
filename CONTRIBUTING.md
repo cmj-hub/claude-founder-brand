@@ -12,8 +12,8 @@ before you contribute.
   an issue first if it's a substantial addition.
 - **Calibration improvements** to the scoring scripts — if you can
   show a case where the script scores wrong, that's gold.
-- **Cross-runtime ports** (Cursor, Gemini CLI, Codex) — see the
-  `Cross-runtime` section of the README.
+- **Cross-runtime ports** (Cursor, Gemini CLI, Codex) — ship as
+  separate plugins; clone this repo to work on the files locally.
 - **Translation** of the framework reference docs.
 
 ## What doesn't land
@@ -22,24 +22,17 @@ before you contribute.
   5 Schwartz tiers, the 4 content pillars) — these are course-anchored.
 - Adding LLM calls inside the skills. The whole point is that the
   skills are deterministic.
-- Adding paid-API dependencies to scripts. Scripts must work zero-dep.
+- Adding third-party packages to scripts. Scripts must work with the
+  Python standard library only.
 - Renaming `claude-*` → `<other-runtime>-*`. We ship per-runtime ports
   as separate plugins instead.
 
 ## Development setup
 
-```bash
-git clone https://github.com/cmj-hub/<this-repo>.git
-cd <this-repo>
-# Test the install locally
-./install.sh   # or install.ps1 on Windows
 ```
-
-For Python scripts:
-
-```bash
-# All scripts are zero-dep Python 3.8+ — just run them
-python3 scripts/<script>.py --help
+git clone https://github.com/cmj-hub/claude-founder-brand.git
+cd claude-founder-brand
+python3 scripts/score_post.py --help
 ```
 
 ## Pull-request checklist
@@ -50,8 +43,7 @@ python3 scripts/<script>.py --help
 - [ ] If you touch a script, smoke-test it and paste output in the PR
 - [ ] If you add a new sub-skill, list it in the README catalog table
 - [ ] CHANGELOG.md updated
-- [ ] No new dependencies (any of: pip packages, npm packages, API
-      keys, paid services)
+- [ ] No new dependencies (pip packages or npm packages)
 
 ## Reporting calibration issues with scoring scripts
 
