@@ -29,13 +29,13 @@ A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the
 ## Install
 
 ```bash
-npx skills add cmj-hub/claude-founder-brand --all -g --full-depth
+skills add cmj-hub/claude-founder-brand --all -g --full-depth
 ```
 
 `--all` writes this pack for every host the installer knows. One host:
 
 ```bash
-npx skills add cmj-hub/claude-founder-brand --skill '*' -g --full-depth -y -a claude-code
+skills add cmj-hub/claude-founder-brand --skill '*' -g --full-depth -y -a claude-code
 ```
 
 Swap `claude-code` for `cursor`, `codex`, `grok`, `github-copilot`, `windsurf`, `cline`, or `opencode`.
