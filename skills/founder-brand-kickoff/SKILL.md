@@ -1,9 +1,10 @@
 ---
 name: founder-brand-kickoff
-description: Adaptive router for the founder-brand skill pack. Runs scripts/check_setup.py to detect state (brand-config? SOUL filled? pillars filled? cadence set? this week's drafts?) and picks the next-best step. Loaded by the main founder-brand skill on bare invocation or "status". Triggers on "where do I start", "what's next for my content", "founder-brand status".
+description: Adaptive router for the founder-brand skill pack. Runs scripts/check_setup.py to detect state (brand-config? SOUL filled? pillars filled? cadence set? this week's drafts?) and picks the next-best step. Use when the main founder-brand skill runs with no arguments or "status", or when the operator asks "where do I start", "what's next for my content", "founder-brand status".
 user-invocable: false
-allowed-tools: Read Grep Glob
+allowed-tools: Read Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*)
 license: MIT
+models: ""
 
 ---
 
@@ -20,7 +21,7 @@ Loaded by `founder-brand` on bare invocation or `status`, or:
 Don't guess state — run the checker from the operator's project folder:
 
 ```
-python3 "${CLAUDE_SKILL_DIR}/../../scripts/check_setup.py" --dir . --format json
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir . --format json
 ```
 
 It reads `brand-config.json`, `SOUL.md`, and `drafts/*.md` and returns:

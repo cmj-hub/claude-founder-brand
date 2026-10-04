@@ -144,6 +144,19 @@ class SetupState(unittest.TestCase):
     def state(self, today="2026-10-07"):
         return check_setup.build_state(self.root, check_setup.dt.date.fromisoformat(today))
 
+    def test_shared_soul_reads_founder_sections_only(self):
+        shared = (
+            "# SOUL.md — pricing section\n\n"
+            "## My stance on pricing\n\n<unfilled pricing line>\n\n"
+            "## How the skill uses this file\n\n<footer>\n\n---\n\n"
+            + FILLED_SOUL
+        )
+        (self.root / "SOUL.md").write_text(shared, encoding="utf-8")
+        soul = check_setup.check_soul(self.root / "SOUL.md")
+        self.assertEqual(soul["placeholders_left"], 0)
+        self.assertEqual(soul["phrases_used"], 5)
+        self.assertEqual(soul["stories"], 3)
+
     def test_template_soul_is_not_filled(self):
         (self.root / "SOUL.md").write_text((ROOT / "SOUL.md").read_text(encoding="utf-8"), encoding="utf-8")
         s = self.state()

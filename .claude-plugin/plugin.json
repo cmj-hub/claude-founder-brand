@@ -1,11 +1,22 @@
 {
   "name": "founder-brand",
-  "icon": ".claude-plugin/icon.png",
-  "version": "0.4.0",
-  "description": "Founder-brand compounding is a four-pillar rotation \u2014 Pillar, Proof, Process, Person \u2014 written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
+  "version": "0.5.0",
+  "description": "Founder-brand compounding is a four-pillar rotation — Pillar, Proof, Process, Person — written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
   "author": {
-    "name": "Jay Mount Consulting"
+    "name": "Jay Mount Consulting",
+    "url": "https://jaymountconsulting.com"
   },
+  "homepage": "https://jaymountconsulting.com/skills",
+  "repository": "https://github.com/cmj-hub/claude-founder-brand",
   "license": "MIT",
-  "homepage": "https://jaymountconsulting.com/skills"
+  "keywords": [
+    "founder-brand",
+    "linkedin",
+    "founder-led-social",
+    "personal-brand",
+    "content-engine",
+    "b2b",
+    "gtm"
+  ],
+  "icon": ".claude-plugin/icon.png"
 }

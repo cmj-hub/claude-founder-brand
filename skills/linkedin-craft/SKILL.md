@@ -1,9 +1,10 @@
 ---
 name: linkedin-craft
-description: LinkedIn-native post construction — format for skim (1-sentence opener, single-line body, bulleted receipt, no engagement bait), generate 5 hook variants across the 5 hook archetypes (contrarian, specific receipt, confession, pattern observation, question reframe), and critique a draft for voice + anti-pattern compliance. Loaded by the main founder-brand skill for LinkedIn-specific work.
+description: LinkedIn-native post construction — format for skim (1-sentence opener, single-line body, bulleted receipt, no engagement bait), generate 5 hook variants across the 5 hook archetypes (contrarian, specific receipt, confession, pattern observation, question reframe), and critique a draft for voice + anti-pattern compliance. Use when the main founder-brand skill needs hooks, skim formatting, or a draft critique.
 user-invocable: false
-allowed-tools: Read Write Grep
+allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
 license: MIT
+models: ""
 
 ---
 
@@ -75,7 +76,7 @@ re-estimate them. Save pasted text to a scratch file, or pass a draft
 path straight through:
 
 ```
-python3 "${CLAUDE_SKILL_DIR}/../../scripts/score_post.py" --file <draft> --soul SOUL.md --format json
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file <draft> --soul SOUL.md --format json
 ```
 
 Drop `--soul` if the operator has no `SOUL.md` yet, and say the voice

@@ -1,9 +1,10 @@
 ---
 name: founder-content
-description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes, from a receipt in the operator's SOUL.md. Scores the draft with scripts/score_post.py, saves it to drafts/, and never posts. Loaded by the main founder-brand skill on "write a LinkedIn post about...", "draft a founder post", "generate a Proof pillar post".
+description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes, from a receipt in the operator's SOUL.md. Scores the draft with scripts/score_post.py, saves it to drafts/, and never posts. Use when the main founder-brand skill gets "write a LinkedIn post about...", "draft a founder post", "generate a Proof pillar post".
 user-invocable: false
-allowed-tools: Read Write Grep
+allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
 license: MIT
+models: ""
 
 ---
 
@@ -107,7 +108,7 @@ Optional: 1-line drive to the operator's own offer ("If you're hunting
 Save the draft first (step 6), then run the scorer with the operator's SOUL:
 
 ```
-python3 "${CLAUDE_SKILL_DIR}/../../scripts/score_post.py" --file drafts/<file>.md --soul SOUL.md
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file drafts/<file>.md --soul SOUL.md
 ```
 
 - Exit 1 or any **Blockers** → rewrite the flagged lines and re-score.
