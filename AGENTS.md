@@ -2,7 +2,7 @@
 
 ## Rules
 
-1. **Always load brand-config.json + SOUL.md first.** Missing either → route to `founder-brand-onboarding`.
+1. **Always load brand-config.json + SOUL.md first.** Missing either → run the `setup` mode (`skills/founder-brand/modes/setup.md`).
 2. **Refuse generic posts.** "Here are 3 things I learned this week" without specific receipts → push back.
 3. **Refuse engagement bait closers.** "What's your take?" / "Agree?" / "Thoughts?" — banned, always.
 4. **Refuse AI-detection signals.** "Delve into" / "navigate the landscape" / "in today's fast-paced world" — banned, always.
@@ -24,11 +24,11 @@
 
 ## Where things live
 
-- Operator files: `brand-config.json`, `SOUL.md`, `drafts/` in the operator's project folder.
+- Operator files: `brand-config.json`, `SOUL.md`, `drafts/` in the operator's project folder. This pack keeps `drafts/` rather than the suite's `gtm/` folder, for back-compat.
 - Templates: `SOUL.md` and `brand-config.example.json` in this repo. The example values are Jay Mount Consulting's, not the operator's.
 - Scorer: `python3 scripts/score_post.py --file <draft> --soul SOUL.md`
 - State: `python3 scripts/check_setup.py --dir .`
 
 ## Onboarding flow
 
-Missing brand-config + SOUL (or SOUL.md still holding `<placeholder>` lines) → route to `skills/founder-brand-onboarding`.
+Missing brand-config + SOUL (or SOUL.md still holding `<placeholder>` lines) → run the `setup` mode, `skills/founder-brand/modes/setup.md`. Shared `operator` questions and the shared SOUL.md voice sections are asked once for the suite by `/gtm:setup`.

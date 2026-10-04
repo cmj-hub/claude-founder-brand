@@ -1,20 +1,16 @@
----
-name: linkedin-craft
-description: LinkedIn-native post construction — format for skim (1-sentence opener, single-line body, bulleted receipt, no engagement bait), generate 5 hook variants across the 5 hook archetypes (contrarian, specific receipt, confession, pattern observation, question reframe), and critique a draft for voice + anti-pattern compliance. Use when the main founder-brand skill needs hooks, skim formatting, or a draft critique.
-user-invocable: false
-allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
-license: MIT
-models: ""
-
----
-
-# LinkedIn Craft — sub-skill
+# Craft — hooks, skim format, critique
 
 LinkedIn-specific post construction and critique.
 
+## Contents
+
+- Activation
+- Modes
+- References
+
 ## Activation
 
-Loaded by `founder-brand` on:
+`/founder-brand:founder-brand hooks <topic>`, `format`, or `critique <post>`, or:
 - "LinkedIn post about..."
 - "5 hook variants for..."
 - "Critique this LinkedIn draft"
@@ -76,7 +72,7 @@ re-estimate them. Save pasted text to a scratch file, or pass a draft
 path straight through:
 
 ```
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file <draft> --soul SOUL.md --format json
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file <draft> --soul SOUL.md --json
 ```
 
 Drop `--soul` if the operator has no `SOUL.md` yet, and say the voice
@@ -99,6 +95,9 @@ and label the score "estimated".
 
 ## Blockers
 <each scorer blocker — these fail the post at any score; "None" if empty>
+
+## What to fix
+<the scorer's `reasons` → `fixes`, one `- what → change` line each>
 
 ## Single weakest line
 Original: "<line>"
@@ -124,5 +123,5 @@ the strongest.
 
 ## References
 
-- [`../founder-brand/SKILL.md`](../founder-brand/SKILL.md) — the full framework + voice rubric
+- The full framework + voice rubric: the main `founder-brand` skill
 - [Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding) — the course

@@ -6,6 +6,23 @@
 
 LinkedIn posts for founders are posts a buyer can tell came from the operator, written from a real receipt.
 
+## In 60 seconds
+
+```text
+/plugin marketplace add cmj-hub/gtm-operator-skills
+/plugin install founder-brand@gtm-operator-skills
+/founder-brand:founder-brand
+```
+
+Or score the sample without an agent:
+
+```bash
+python3 scripts/score_post.py --file examples/proof.good.md   # exit 0, prints 100/100 and "Next: /founder-brand:founder-brand status"
+python3 scripts/score_post.py --file examples/proof.bad.md    # exit 1: - blocker: AI-detection phrase: 'delve into' → cut it and say the plain thing in your own words
+```
+
+Part of the GTM operator suite — `/plugin install gtm@gtm-operator-skills` installs all ten.
+
 > "In today's fast-paced world, what's your take?" is not a founder post. A named receipt is.
 
 Founder-brand compounding is a four-pillar rotation — Pillar, Proof, Process, Person — written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.
@@ -28,14 +45,7 @@ A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the
 
 ## Install
 
-Claude Code:
-
-```text
-/plugin marketplace add cmj-hub/gtm-operator-skills
-/plugin install founder-brand@gtm-operator-skills
-```
-
-Then run `/founder-brand:founder-brand`.
+Claude Code: see [In 60 seconds](#in-60-seconds).
 
 Other agents (Cursor, Codex, Grok, Copilot, Windsurf, Cline, OpenCode):
 
@@ -43,17 +53,21 @@ Other agents (Cursor, Codex, Grok, Copilot, Windsurf, Cline, OpenCode):
 npx skills add cmj-hub/claude-founder-brand --all -g --full-depth
 ```
 
-Every skill lives at `skills/<name>/SKILL.md`, so the repo also loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
+The one skill lives at `skills/founder-brand/SKILL.md`, so the repo also loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
 
 ## What's in the pack
 
-| Skill | Job |
+One skill, `founder-brand`. It loads your `brand-config.json` + `SOUL.md` and routes by argument: `/founder-brand:founder-brand <mode>`.
+
+| Mode | Job |
 |---|---|
-| `founder-brand` | Entry point. Loads your `brand-config.json` + `SOUL.md`, routes by argument: `content <pillar>`, `engine`, `critique`, `hooks`, `status`, `onboarding` |
-| `founder-brand-onboarding` | 15-minute setup — writes `SOUL.md` (voice, phrases, stories) and `brand-config.json` (audience, pillar pools, cadence) in your project folder |
-| `founder-brand-kickoff` | Reads state, says what's next, runs the weekly queue |
-| `founder-content` | One post on one pillar, from one of your receipts, scored and saved to `drafts/` |
-| `linkedin-craft` | Five hook variants, skim formatting, scored critique |
+| `status` (no argument) | Reads state, says what's next, runs the weekly queue |
+| `setup` | 15-minute setup — writes `SOUL.md` (voice, phrases, stories) and `brand-config.json` (audience, pillar pools, cadence) in your project folder. Shared operator questions come from `/gtm:setup` once for the suite |
+| `content <pillar>` | One post on one pillar, from one of your receipts, scored and saved to `drafts/` |
+| `engine` | 12-week plan across the four pillars |
+| `hooks <topic>`, `format`, `critique <post>` | Five hook variants, skim formatting, scored critique |
+
+Moved in 0.7: the sub-skills `founder-brand-kickoff`, `founder-brand-onboarding`, `founder-content` and `linkedin-craft` are now the `status`, `setup`, `content` and `hooks`/`format`/`critique` modes. Posts still go to `drafts/` (this pack keeps `drafts/`, not `gtm/`, so existing drafts still count).
 
 | Script | Job |
 |---|---|
@@ -76,7 +90,7 @@ python3 scripts/score_post.py --file drafts/<your-draft>.md --soul SOUL.md
 python3 scripts/check_setup.py --dir .
 ```
 
-Exit 0 is ship. Exit 1 is rewrite. `--format json` for tooling.
+Exit 0 is ship. Exit 1 is rewrite: every reason prints as `- what is wrong → what to change`, and the last line is `Next:`. `--json` for tooling (adds `reasons`, `fixes`, `next`).
 
 ## What this pack will not do
 

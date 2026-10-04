@@ -1,18 +1,18 @@
----
-name: founder-brand-kickoff
-description: Adaptive router for the founder-brand skill pack. Runs scripts/check_setup.py to detect state (brand-config? SOUL filled? pillars filled? cadence set? this week's drafts?) and picks the next-best step. Use when the main founder-brand skill runs with no arguments or "status", or when the operator asks "where do I start", "what's next for my content", "founder-brand status".
-user-invocable: false
-allowed-tools: Read Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*)
-license: MIT
-models: ""
+# Status — state, this week's queue, next step
 
----
+Runs the setup checker, then routes to setup, a post, or the weekly queue.
 
-# Founder-Brand Kickoff — adaptive router
+## Contents
+
+- Activation
+- State detection
+- Welcome flow
+- Weekly mode
+- Status mode
 
 ## Activation
 
-Loaded by `founder-brand` on bare invocation or `status`, or:
+Runs on a bare `/founder-brand:founder-brand` or `status`, or:
 - "Where do I start"
 - "What's next for my content"
 
@@ -21,7 +21,7 @@ Loaded by `founder-brand` on bare invocation or `status`, or:
 Don't guess state — run the checker from the operator's project folder:
 
 ```
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir . --format json
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir . --json
 ```
 
 It reads `brand-config.json`, `SOUL.md`, and `drafts/*.md` and returns:
@@ -38,23 +38,25 @@ It reads `brand-config.json`, `SOUL.md`, and `drafts/*.md` and returns:
 | `next_pillar` | Next slot after the last draft, in `rotation_order` |
 | `drifting_pillars` | Pillars with no draft in 4+ weeks |
 | `next_step` | The one thing to do now |
+| `reasons` / `fixes` | Each gap and what to change (parallel lists) |
+| `next` | The command to run next |
 
 If Bash is unavailable, read the files directly and apply the same rules.
 
 | State | Route to |
 |---|---|
-| `!has_brand_config OR !has_soul OR !soul_filled` | `founder-brand-onboarding` |
-| `!pillars_filled` | "Fill pillar topic pools (need ≥3 per pillar)." → onboarding Step 7 |
-| `!voice_fingerprints` | "Mine phrases-I-use list — need ≥5. Read your last 10 posts/emails." → onboarding Step 2 |
-| `!stories_reservoir` | "Capture ≥3 stories. Anonymized but specific." → onboarding Step 5 |
-| `!cadence_set` | "Pick weekly cadence — default 4 posts/week, 1 per pillar." → onboarding Step 8 |
+| `!has_brand_config OR !has_soul OR !soul_filled` | [setup](setup.md) mode |
+| `!pillars_filled` | "Fill pillar topic pools (need ≥3 per pillar)." → setup Step 7 |
+| `!voice_fingerprints` | "Mine phrases-I-use list — need ≥5. Read your last 10 posts/emails." → setup Step 2 |
+| `!stories_reservoir` | "Capture ≥3 stories. Anonymized but specific." → setup Step 5 |
+| `!cadence_set` | "Pick weekly cadence — default 4 posts/week, 1 per pillar." → setup Step 8 |
 | `this_week_done` | "This week's queue done. Re-run on Monday for next rotation." |
 | else | Weekly mode for `next_pillar` |
 
 ## Welcome flow
 
 ```
-> /founder-brand
+> /founder-brand:founder-brand
 
 Welcome.
 
@@ -93,12 +95,12 @@ Other pool options for this slot:
 Prefer topics not already used in `drafts/` (grep the `topic:` lines).
 If `drifting_pillars` is non-empty, say so and offer that pillar first.
 
-On "y", load `founder-content` with the pillar and topic locked.
+On "y", run the [content](content.md) mode with the pillar and topic locked.
 
 ## Status mode
 
-`/founder-brand status` → run the checker with `--format text` and show
-its output as-is, then one line on the next step:
+`/founder-brand:founder-brand status` → run the checker (text output)
+and show its output as-is; it ends with the `Next:` line:
 
 ```
 # Founder-brand status
@@ -109,5 +111,5 @@ Pillar pools:  ✓ pillar 3, proof 3, process 3, person 3
 Cadence:       ✓ 4 posts/week, Pillar → Proof → Process → Person
 This week:     2 of 4 drafted (1 published) since 2026-10-05
 
-Next: Draft this week's Process post from your topic pool.
+Next: /founder-brand:founder-brand content process — Draft this week's Process post from your topic pool.
 ```

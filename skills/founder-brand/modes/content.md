@@ -1,20 +1,17 @@
----
-name: founder-content
-description: Generate a single LinkedIn-native post for a founder, on a specific pillar (Pillar / Proof / Process / Person) and using one of the 5 hook archetypes, from a receipt in the operator's SOUL.md. Scores the draft with scripts/score_post.py, saves it to drafts/, and never posts. Use when the main founder-brand skill gets "write a LinkedIn post about...", "draft a founder post", "generate a Proof pillar post".
-user-invocable: false
-allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
-license: MIT
-models: ""
+# Content — one post on one pillar
 
----
+Generates a single founder-voice LinkedIn post, scores it, and saves it to `drafts/`.
 
-# Founder Content — sub-skill
+## Contents
 
-Generates a single founder-voice LinkedIn post.
+- Activation
+- Workflow
+- Banned patterns (always refuse)
+- References
 
 ## Activation
 
-Loaded by `founder-brand` on:
+`/founder-brand:founder-brand content <pillar>`, or:
 - "Write a LinkedIn post about..."
 - "Draft a founder post..."
 - "Generate a Proof pillar post on..."
@@ -24,7 +21,7 @@ Loaded by `founder-brand` on:
 ### 0. Load the operator
 
 Read `brand-config.json` and `SOUL.md` from the project folder. Either
-missing → load `founder-brand-onboarding` instead. From them, hold:
+missing → run the [setup](setup.md) mode instead. From them, hold:
 
 - `SOUL.md` voice settings, phrases-I-use, phrases-I-refuse, stories
 - `brand-config.json` audience, pillar topic pools, `business_outcomes`
@@ -113,7 +110,8 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file drafts/<file>.md --so
 
 - Add `--network <name>` when the operator names one network. A post aimed
   at 10+ networks is a blocker: pick one network and write for it.
-- Exit 1 or any **Blockers** → rewrite the flagged lines and re-score.
+- Exit 1 or any **Blockers** → each `- what is wrong → what to change`
+  line says what to rewrite; fix those lines and re-score.
   Up to 3 rounds; then show the operator the draft with the scorer's notes.
 - Exit 0 → record the score in the draft's frontmatter.
 
@@ -148,7 +146,7 @@ status: draft
 <the post, exactly as it should be pasted>
 ```
 
-`founder-brand-kickoff` counts these files for the weekly queue. When
+The [status](status.md) mode counts these files for the weekly queue. When
 the operator says they published it, set `status: published`.
 
 ### 7. Output + offer the critique pass
@@ -157,6 +155,8 @@ Show the post, the score, and the file path. Never post it. Then offer:
 
 > "Want me to identify the single weakest line and rewrite it? (1
 > sentence + rationale.)"
+
+End with one line: `Next: /founder-brand:founder-brand status`.
 
 ## Banned patterns (always refuse)
 
@@ -176,5 +176,5 @@ If the user requests one, push back with the founder-voice alternative.
 
 ## References
 
-- [`../founder-brand/SKILL.md`](../founder-brand/SKILL.md) — the framework
+- The framework: the main `founder-brand` skill (pillars, hooks, voice rubric)
 - [Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding) — the course

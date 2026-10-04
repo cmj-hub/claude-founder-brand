@@ -1,17 +1,7 @@
 ---
 name: founder-brand
-description: >
-  Founder-led social system for B2B founders building a compounding personal
-  brand. Generates LinkedIn-native posts on the Pillar / Proof / Process /
-  Person rotation from real receipts, plans a 12-week content engine, scores
-  drafts with a deterministic scorer (no thought-leader voice, no engagement
-  bait, no AI-detection filler), and writes hooks across 5 archetypes.
-  Drafts only — never posts. Use when the founder asks for founder content,
-  a LinkedIn post, founder-led social, personal brand or LinkedIn strategy,
-  content pillars, founder voice, a content engine, B2B social, or "score my
-  post". Not for cold outreach (use cold-email), post-opt-in email
-  sequences (use email-sequence), or landing-page copy (use landing-page).
-argument-hint: "[content <pillar> | engine | critique <post> | hooks <topic> | status | onboarding]"
+description: "Founder-led LinkedIn system for B2B founders: drafts posts on the Pillar / Proof / Process / Person rotation from real receipts, plans a 12-week content engine, writes hooks, and scores drafts with a deterministic scorer (no thought-leader voice, engagement bait or AI filler). Drafts only, never posts. Use when the founder asks for a LinkedIn post, founder content, personal brand or content pillars, founder voice, a content plan, or \"score my post\". Not for cold outreach (use cold-email), post-opt-in email (use email-sequence), or landing-page copy (use landing-page)."
+argument-hint: "[content <pillar> | engine | critique <post> | hooks <topic> | format | status | setup]"
 allowed-tools: Read Write Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
 license: MIT
 models: ""
@@ -34,7 +24,7 @@ Every mode starts here. No exceptions.
    pack in the suite; this pack reads `operator`, `audience`, `pillars`,
    `cadence`, `business_outcomes`, and its own `SOUL.md` sections.
 2. Either missing, or `SOUL.md` still holds `<placeholder>` lines →
-   load `founder-brand-onboarding` and stop. A post without SOUL.md is
+   run the `setup` mode and stop. A post without SOUL.md is
    generic by construction.
 3. For state (what's filled, which pillar is next, this week's count), run:
 
@@ -42,21 +32,34 @@ Every mode starts here. No exceptions.
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir .
    ```
 
-   Exit 0 = ready. Exit 1 = setup incomplete; the `Next:` line says what.
+   Exit 0 = ready; the `Next:` line names the post to draft. Exit 1 =
+   setup incomplete; each gap prints as `- what is wrong → what to
+   change`.
 
-## Quick reference
+## Modes
 
-`$ARGUMENTS` picks the mode. Empty → load `founder-brand-kickoff`.
+`$ARGUMENTS` picks the mode. If it names a mode, go straight to it.
+Empty → `status`. Otherwise match the request to a row. Read the mode
+file with the Read tool and follow it.
 
-| Argument | Mode | Loads |
+| You say / argument | Mode | Mode file |
 |---|---|---|
-| *(none)* | Detect state, pick the next-best step | `founder-brand-kickoff` |
-| `status` | Program status — config, SOUL, this week's queue | `founder-brand-kickoff` |
-| `onboarding` / `onboarding refresh` | First-run setup or quarterly voice refresh | `founder-brand-onboarding` |
-| `content <pillar>` | One post on a pillar, saved to `drafts/` | `founder-content` |
-| `engine` | 12-week content plan across all 4 pillars | this file |
-| `critique <post or path>` | Score + weakest-line rewrite | `linkedin-craft` (Mode C) |
-| `hooks <topic>` | 5 hook variants, one per archetype | `linkedin-craft` (Mode A) |
+| *(none)*, `status`, "where do I start" | State, this week's queue, the next step | [modes/status.md](modes/status.md) |
+| `setup` / `onboarding` / `setup refresh` | First-run setup or quarterly voice refresh | [modes/setup.md](modes/setup.md) |
+| `content <pillar>`, "write a LinkedIn post about…" | One post on a pillar, saved to `drafts/` | [modes/content.md](modes/content.md) |
+| `engine`, "plan my content" | 12-week content plan across all 4 pillars | this file (below) |
+| `critique <post or path>`, "score my post" | Score + weakest-line rewrite | [modes/craft.md](modes/craft.md) (Mode C) |
+| `hooks <topic>` | 5 hook variants, one per archetype | [modes/craft.md](modes/craft.md) (Mode A) |
+| `format` | Reformat a finished post for skim | [modes/craft.md](modes/craft.md) (Mode B) |
+
+Moved in 0.7: the old sub-skills (`founder-brand-kickoff`,
+`founder-brand-onboarding`, `founder-content`, `linkedin-craft`) are
+these modes. Type `/founder-brand:founder-brand <mode>`.
+
+Files: `brand-config.json` and `SOUL.md` at the project root (shared
+with the suite). Posts go to `drafts/` at the project root, as before;
+this pack keeps `drafts/` rather than `gtm/` so existing drafts and the
+weekly count keep working.
 
 ## The framework — 4 content pillars
 
@@ -139,8 +142,9 @@ draft runs through the scorer before it is shown. Never skip it.
 
 ### Mode: content generation
 
-Load `founder-content`. It locks the pillar, the hook, and the receipt,
-drafts the post, scores it, and saves it to `drafts/`.
+Run the [content](modes/content.md) mode. It locks the pillar, the
+hook, and the receipt, drafts the post, scores it, and saves it to
+`drafts/`.
 
 ### Mode: 12-week engine planning
 
@@ -161,8 +165,9 @@ drafts the post, scores it, and saves it to `drafts/`.
 
 ### Mode: critique
 
-Load `linkedin-craft`, Mode C. Run the scorer first; the score is the
-scorer's, not a guess.
+Run the [craft](modes/craft.md) mode, Mode C. Run the scorer first;
+the score is the scorer's, not a guess. Exit 1 prints every reason as
+`- what is wrong → what to change`; fix those lines and score again.
 
 ## Never
 
@@ -171,12 +176,13 @@ scorer's, not a guess.
   `[hypothetical]`.
 - Skip the scorer when `auto_critique_before_post` is true.
 
-## Sub-skills
+## Finish every run with the next step
 
-- [`founder-brand-kickoff`](../founder-brand-kickoff/SKILL.md) — state router + weekly queue + status
-- [`founder-brand-onboarding`](../founder-brand-onboarding/SKILL.md) — writes `brand-config.json` + `SOUL.md`
-- [`founder-content`](../founder-content/SKILL.md) — one post on a specific pillar
-- [`linkedin-craft`](../linkedin-craft/SKILL.md) — hooks, skim format, critique
+End with one `Next:` line. After a post scores exit 0:
+`Next: /founder-brand:founder-brand status` (mark it published when the
+founder posts it; status names the next pillar). After setup: the
+checker's `Next:` line. This is the last pack in the suite; nothing
+comes after it.
 
 ## Works with the suite
 
@@ -184,7 +190,7 @@ This is step 10 of the GTM operator suite (`/plugin marketplace add cmj-hub/gtm-
 
 - **Reads:** `operator`, `audience`, `pillars`, `cadence`, `business_outcomes` from `brand-config.json`; `psp.vocabulary` (the buyer's words for the audience) and `evp.primary` (a Pillar post's claim) if present.
 - **Writes:** `audience`, `pillars`, `cadence`, `business_outcomes`, and this pack's `SOUL.md` sections. Merge at the field level; never overwrite another pack's keys.
-- **Before this:** psp (`/psp:psp`) and evp (`/evp:evp`), optional, when the posts should use the buyer's words and the outreach line.
+- **Before this:** `/gtm:setup` once, when `operator` is empty; psp (`/psp:psp`) and evp (`/evp:evp`), optional, when the posts should use the buyer's words and the outreach line.
 - **After this:** nothing. The operator publishes the drafts.
 
 If a companion pack is not installed, name it and its install line (`/plugin install <name>@gtm-operator-skills`); do not do its job inline.

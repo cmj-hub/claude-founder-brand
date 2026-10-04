@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.7.0] — 2026-10-04
+
+One skill per pack. The four sub-skills are modes of `founder-brand`, read on demand.
+
+### Moved
+- `founder-brand-kickoff` → `/founder-brand:founder-brand status` (`skills/founder-brand/modes/status.md`). Also runs on a bare `/founder-brand:founder-brand`.
+- `founder-brand-onboarding` → `/founder-brand:founder-brand setup` (`skills/founder-brand/modes/setup.md`). `onboarding` still routes there.
+- `founder-content` → `/founder-brand:founder-brand content <pillar>` (`skills/founder-brand/modes/content.md`).
+- `linkedin-craft` → `/founder-brand:founder-brand hooks | format | critique` (`skills/founder-brand/modes/craft.md`).
+- Posts stay in `drafts/`. The suite's other packs write to `gtm/`; this pack keeps `drafts/` so existing drafts and the weekly count keep working.
+
+### Changed
+- Always-on cost drops from ~944 to ~223 tokens: one skill description instead of five.
+- `argument-hint` lists the modes; `$ARGUMENTS` routes straight to one.
+- Setup skips the shared `operator` questions and the shared SOUL.md sections (phrases used, phrases refused, stories) when they are filled, and points at `/gtm:setup` to ask them once for the suite.
+- `score_post.py` and `check_setup.py`: `--json` (alias of `--format json`); exit-1 output lists every reason as `- what is wrong → what to change` and ends `Next: fix the lines above and run this again.` A passing post ends `Next: /founder-brand:founder-brand status`; a ready setup ends `Next: /founder-brand:founder-brand content <pillar>`. JSON gains `reasons`, `fixes` and `next`; existing keys (`missing`, `next_step`, `blockers`) are unchanged. `--help` shows an example.
+
+### Added
+- `evals/`: five trigger cases (four should fire `founder-brand`, one cold-email near-miss should not). `.github/workflows/evals.yml` runs them on manual dispatch when `ANTHROPIC_API_KEY` is set.
+- README "In 60 seconds".
+- `tests/test_cli.py`.
+
 ## [0.6.0] — 2026-10-04
 
 ### Added

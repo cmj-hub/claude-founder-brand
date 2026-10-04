@@ -20,6 +20,13 @@ USAGE:
     python3 score_post.py --file draft.md --network LinkedIn
     python3 score_post.py --stdin   # JSON: {"post", "phrases_used", "phrases_refused", "network", "networks"}
 
+    python3 score_post.py --file examples/proof.good.md --json   # one JSON object
+
+OUTPUT: text by default. On exit 1 every reason prints as
+"- <what is wrong> → <what to change>", then "Next: fix the lines above and
+run this again." On exit 0 the last line names the next step. --json (alias
+of --format json) adds "reasons", "fixes" (parallel lists) and "next".
+
 EXIT: 0 = ship (score >= --min-score, no blockers), 1 = rewrite, 2 = bad input.
 
 NO LLM. NO network. Pure regex + heuristics.
@@ -450,6 +457,69 @@ def score_post(post: str, phrases_used: Optional[List[str]] = None, phrases_refu
     )
 
 
+NEXT_STEP = "/founder-brand:founder-brand status"
+RETRY = "fix the lines above and run this again."
+
+# Axis notes that are information, not problems.
+INFO_NOTE = re.compile(r"^(Hook archetype:|Voice hits:|Concrete receipt present|No SOUL.md phrases-I-use list provided)")
+
+# (note or blocker prefix, what to change). First match wins.
+FIXES = (
+    ("AI-detection phrase", "cut it and say the plain thing in your own words"),
+    ("Engagement bait", "end on one direct line, not a question to the crowd"),
+    ("Refused phrase (SOUL.md)", "replace it; it is on your SOUL.md refuse list"),
+    ("No clear hook archetype", "open with one of the 5 hook archetypes, e.g. the number that happened"),
+    ("Thought-leader voice:", "cut them and say it plainly"),
+    ("Thought-leader voice", "cut it; open with the receipt, not a performance"),
+    ("Hook is ", "cut the first line to 25 words or fewer"),
+    ("No specific numbers", "add the number, unit and timeframe from the story"),
+    ("Only ", "add a second number from the same story"),
+    ("None of your ", "use one of your SOUL.md phrases-I-use where it fits"),
+    ("Operator's refused phrases", "replace them; they are on your SOUL.md refuse list"),
+    ("No concrete receipt", "add one number-anchored claim from your SOUL.md stories"),
+)
+SUFFIX_FIXES = (
+    ("hashtags (max 3)", "keep 3 or fewer specific tags"),
+    ("words — LinkedIn-optimal is ≤200", "cut to 200 words or fewer"),
+    ("words — likely too short to land", "add the receipt and the lever (30+ words)"),
+    ("emoji — multi-emoji blocks read as influencer cadence", "keep to one emoji or none"),
+)
+
+
+def fix_for(text: str) -> tuple:
+    """Split a blocker or note into (what is wrong, what to change)."""
+    what, _, after = text.partition(" — ")
+    for prefix, fix in FIXES:
+        if text.startswith(prefix):
+            return what, fix
+    for suffix, fix in SUFFIX_FIXES:
+        if suffix in text:
+            return what, fix
+    return what, after or "rewrite this line and score again"
+
+
+def fix_lines(s: PostScore, min_score: int) -> tuple:
+    reasons, fixes = [], []
+    for blocker in s.blockers:
+        what, fix = fix_for(blocker)
+        reasons.append(f"blocker: {what}")
+        fixes.append(fix)
+    if s.total < min_score:
+        reasons.append(f"score {s.total}/{s.max_total} is under {min_score}")
+        fixes.append("work through the axis lines below, lowest axis first")
+    for axis in sorted(s.axes, key=lambda a: a.score - a.max_score):
+        if axis.score == axis.max_score or (s.blockers and axis.name == "anti-patterns"
+                                            and not any(n.startswith(("Thought-leader", "Operator's")) for n in axis.notes)):
+            continue
+        for note in axis.notes:
+            if INFO_NOTE.search(note) or (s.blockers and note.startswith(("AI-detection", "Engagement bait"))):
+                continue
+            what, fix = fix_for(note)
+            reasons.append(f"{axis.name}: {what}")
+            fixes.append(fix)
+    return reasons, fixes
+
+
 def format_text(s: PostScore) -> str:
     lines = [
         f"# Post Score",
@@ -498,7 +568,7 @@ def parse_soul_md(path: str) -> tuple:
 
 
 def strip_frontmatter(text: str) -> str:
-    """Drafts saved by founder-content carry YAML frontmatter; score the body only."""
+    """Drafts saved by the content mode carry YAML frontmatter; score the body only."""
     if text.startswith("---\n"):
         end = text.find("\n---", 4)
         if end != -1:
@@ -507,7 +577,11 @@ def strip_frontmatter(text: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description="Score a founder post 0-100. Exit 0 ship, 1 rewrite or blocked, 2 bad input.",
+        epilog="example: python3 scripts/score_post.py --file examples/proof.good.md --soul SOUL.md",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     source = parser.add_mutually_exclusive_group()
     source.add_argument("--post", default="", help="Post text")
     source.add_argument("--file", default=None, help="Path to a post file (a draft with --- frontmatter is fine)")
@@ -515,7 +589,10 @@ def main() -> int:
     parser.add_argument("--soul", default=None, help="Path to SOUL.md (extracts phrases lists)")
     parser.add_argument("--network", default="", help="Where the post goes (one network). 10+ networks is a blocker")
     parser.add_argument("--min-score", type=int, default=70, help="Exit 0 at or above this score (default 70)")
-    parser.add_argument("--format", default="text", choices=["text", "json"])
+    parser.add_argument("--json", dest="format", action="store_const", const="json",
+                        help="Print one JSON object (same as --format json)")
+    parser.add_argument("--format", dest="format", default="text", choices=["text", "json"],
+                        help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     used: List[str] = []
@@ -545,11 +622,20 @@ def main() -> int:
         return 2
 
     result = score_post(post, used, refused, args.min_score, network, networks)
+    passed = result.total >= args.min_score and not result.blockers
+    reasons, fixes = ([], []) if passed else fix_lines(result, args.min_score)
     if args.format == "json":
-        print(json.dumps(asdict(result), indent=2))
+        payload = asdict(result)
+        payload.update(reasons=reasons, fixes=fixes, next=NEXT_STEP if passed else RETRY)
+        print(json.dumps(payload, indent=2))
     else:
         print(format_text(result))
-    return 0 if result.total >= args.min_score and not result.blockers else 1
+        if reasons:
+            print("\n## What to fix")
+            for what, fix in zip(reasons, fixes):
+                print(f"- {what} → {fix}")
+        print(f"\nNext: {NEXT_STEP if passed else RETRY}")
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

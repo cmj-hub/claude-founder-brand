@@ -1,26 +1,21 @@
----
-name: founder-brand-onboarding
-description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes, or refreshes them quarterly. Use when brand-config.json or SOUL.md is missing or unfilled, or the operator says "set up founder-brand", "configure my voice", "founder-brand onboarding", "refresh my SOUL.md".
-argument-hint: "[refresh]"
-allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*)
-license: MIT
-models: ""
-
----
-
-# Founder-Brand Onboarding — first-run setup
+# Setup — first-run voice and content config
 
 The most important setup in this pack. The point of founder-brand
 content is that it sounds like YOU. Without SOUL.md, the skill
 produces LinkedIn-influencer-voice slop.
 
+## Contents
+
+- Activation
+- Where the files go
+- Workflow
+
 ## Activation
 
-Loaded automatically by `founder-brand` on missing brand-config.json
-or SOUL.md.
+Runs first when brand-config.json or SOUL.md is missing or unfilled.
 
-Also user-invocable: "Set up founder-brand onboarding", "Configure voice",
-or `/founder-brand onboarding refresh`.
+Also `/founder-brand:founder-brand setup` (`onboarding` works too),
+`setup refresh`, "Set up founder-brand onboarding", "Configure voice".
 
 ## Where the files go
 
@@ -63,6 +58,21 @@ unless the operator says they're true for them.
 Ask one step at a time. Write after each step so a half-finished
 onboarding still saves progress.
 
+### Step 0 — Shared basics (once for the whole suite)
+
+`operator` (name, company, title, calendar_url) is shared by every
+pack, and so are the SOUL.md sections `## Who I am`, `## Phrases I use
+a lot`, `## Phrases I refuse` and `## Stories I lean on`. If they are
+filled, skip this step and the matching steps below (2, 3, 5): show
+what is there and move on. This pack does not need `icp`; `audience`
+(Step 7) covers it.
+
+If `operator` is missing, say: "Run `/gtm:setup` once for the whole
+suite." If the gtm plugin is not installed (`/plugin install
+gtm@gtm-operator-skills`), ask only the operator questions inline, in
+one short batch, and fill gaps only. Then ask this pack's own
+questions; do not ask the shared ones twice.
+
 ### Step 1 — Voice in 3 sentences
 
 ```
@@ -80,6 +90,9 @@ Don't generalize. Tell me what's true about YOUR writing.
 Save to `SOUL.md` (top section).
 
 ### Step 2 — Phrases I use a lot (5-10)
+
+Shared section. Skip when `/gtm:setup` (or another pack) already
+filled it with 5 or more phrases.
 
 ```
 Pull up your last 10 emails / posts / messages. What phrases show up
@@ -102,6 +115,8 @@ and show them for a yes/no. Only confirmed phrases go in.
 Save to `SOUL.md`.
 
 ### Step 3 — Phrases I refuse (5-10)
+
+Shared section. Skip when it already holds 5 or more phrases.
 
 ```
 What phrases would you NEVER write? Be specific. These get banned in
@@ -136,6 +151,9 @@ Emoji:            Never / Sparingly (≤1/post) / Often
 Save to `SOUL.md`.
 
 ### Step 5 — Stories reservoir (3-5)
+
+Shared section (`## Stories I lean on`). Skip when it already holds 3
+or more stories.
 
 ```
 Give me 3-5 specific receipts you can cite. Anonymized but specific.
@@ -231,7 +249,7 @@ line names the gap — go back to that step.
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir .
 ```
 
-Create an empty `drafts/` folder — `founder-content` saves posts there.
+Create an empty `drafts/` folder — the [content](content.md) mode saves posts there. This pack keeps `drafts/` (not `gtm/`).
 
 ```
 ✓ brand-config.json — audience + 4 pillars (×3 topics each) + cadence + outcomes
@@ -248,6 +266,8 @@ The output will:
 - Match your voice settings
 - Be ≤200 words, 1-sentence opener, scannable body, no engagement bait
 - Pass scripts/score_post.py with your SOUL.md
+
+Next: /founder-brand:founder-brand content <pillar>
 ```
 
 ### Step 10 — Refresh cadence
@@ -258,5 +278,5 @@ Voice evolves. Re-run onboarding when:
 - The audience shifts
 - Quarterly minimum
 
-Re-run: `/founder-brand onboarding refresh`
+Re-run: `/founder-brand:founder-brand setup refresh`
 ```
