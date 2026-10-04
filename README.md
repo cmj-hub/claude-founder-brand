@@ -28,9 +28,22 @@ A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the
 
 ## Install
 
-This pack is the files in this repository. Open the tree on the host you already run. There is no remote installer.
+Claude Code:
 
-Every skill lives at `skills/<name>/SKILL.md`, so the repo loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
+```text
+/plugin marketplace add cmj-hub/gtm-operator-skills
+/plugin install founder-brand@gtm-operator-skills
+```
+
+Then run `/founder-brand:founder-brand`.
+
+Other agents (Cursor, Codex, Grok, Copilot, Windsurf, Cline, OpenCode):
+
+```text
+npx skills add cmj-hub/claude-founder-brand --all -g --full-depth
+```
+
+Every skill lives at `skills/<name>/SKILL.md`, so the repo also loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
 
 ## What's in the pack
 

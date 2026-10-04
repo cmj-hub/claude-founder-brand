@@ -1,9 +1,10 @@
 ---
 name: founder-brand-onboarding
-description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes, or refreshes them quarterly. Triggers on "set up founder-brand", "configure my voice", "founder-brand onboarding", "refresh my SOUL.md".
+description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes, or refreshes them quarterly. Use when brand-config.json or SOUL.md is missing or unfilled, or the operator says "set up founder-brand", "configure my voice", "founder-brand onboarding", "refresh my SOUL.md".
 argument-hint: "[refresh]"
-allowed-tools: Read Write Grep
+allowed-tools: Read Write Grep Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*)
 license: MIT
+models: ""
 
 ---
 
@@ -24,19 +25,34 @@ or `/founder-brand onboarding refresh`.
 ## Where the files go
 
 Both files live in the operator's project folder (the current working
-directory), not inside the plugin. Start from the templates that ship
-with the pack:
+directory), not inside the plugin. They are shared by every pack in the
+GTM operator suite.
 
-- `${CLAUDE_SKILL_DIR}/../../SOUL.md` → `./SOUL.md`
-- `${CLAUDE_SKILL_DIR}/../../brand-config.example.json` → `./brand-config.json`
+- One `brand-config.json` and one `SOUL.md` at the project root.
+- Merge at the field level. Read the existing file first, add or update
+  only the fields this pack owns — `audience`, `pillars`, `cadence`,
+  `business_outcomes` — and leave every other key exactly as it was.
+  Never rewrite the file from the example, never delete another pack's
+  keys (`psp`, `evp`, `pricing`, ...). Show the diff and ask before
+  changing a field that already has a value.
+- `operator` is shared: fill gaps only.
+- `SOUL.md`: append or update only this pack's `## ` sections. Never
+  rewrite another pack's section.
 
-Keep the template's `##` headings exactly — `scripts/score_post.py` and
-`scripts/check_setup.py` find the phrase lists and stories by heading.
-Replace every `<placeholder>` line; the checker counts the ones left.
+The shapes come from the templates that ship with the pack:
 
-If either file already exists, this is a **refresh**: read it, show
-what's there step by step, and change only what the operator changes.
-Never overwrite a filled file wholesale.
+- `${CLAUDE_PLUGIN_ROOT}/SOUL.md` — the founder-brand sections
+- `${CLAUDE_PLUGIN_ROOT}/brand-config.example.json` — the four blocks this pack owns
+
+If a file does not exist yet, create it with this pack's blocks or
+sections only. Keep the template's `##` headings exactly —
+`scripts/score_post.py` and `scripts/check_setup.py` find the phrase
+lists and stories by heading. Replace every `<placeholder>` line; the
+checker counts the ones left.
+
+If this pack's fields or sections already exist, this is a
+**refresh**: read them, show what's there step by step, and change only
+what the operator changes.
 
 The example values in the templates (PSP, Series-B SaaS, JMC URLs) are
 Jay Mount Consulting's. None of them survive into the operator's files
@@ -183,6 +199,10 @@ PERSON pool — human stories / stakes / why you care
   • <Your story 2>
 ```
 
+If `brand-config.json` has a `psp` block, offer `psp.vocabulary` as the
+audience's own words and `evp.primary` (if present) as a Pillar topic.
+Only what the operator confirms goes in. Neither block is required.
+
 Save to `brand-config.audience` + `brand-config.pillars`.
 
 ### Step 8 — Cadence + business outcomes
@@ -208,7 +228,7 @@ Run the checker. Exit 0 means setup is complete; otherwise its `Next:`
 line names the gap — go back to that step.
 
 ```
-python3 "${CLAUDE_SKILL_DIR}/../../scripts/check_setup.py" --dir .
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir .
 ```
 
 Create an empty `drafts/` folder — `founder-content` saves posts there.

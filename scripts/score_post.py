@@ -467,10 +467,11 @@ def parse_soul_md(path: str) -> tuple:
         items = [clean_phrase(i) for i in items if not i.strip().startswith("<")]
         items = [i for i in items if i]
         if "phrases i use" in head_l or "phrases that show up" in head_l:
-            used = items
+            used.extend(items)
         elif "phrases i refuse" in head_l or "won't write" in head_l or "phrases i would never" in head_l:
-            refused = items
-    return used, refused
+            refused.extend(items)
+    # A shared SOUL.md can repeat a heading per pack; keep each phrase once.
+    return list(dict.fromkeys(used)), list(dict.fromkeys(refused))
 
 
 def strip_frontmatter(text: str) -> str:

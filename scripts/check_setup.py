@@ -32,14 +32,31 @@ MIN_TOPICS = 3
 MIN_PHRASES = 5
 MIN_STORIES = 3
 PLACEHOLDER_RE = re.compile(r"^\s*(?:[-*]\s+)?<", re.MULTILINE)
+# SOUL.md is shared by every pack in the suite. Founder-brand reads only these
+# sections (by heading substring) and ignores the rest, including other
+# packs' placeholders and every "How the ... uses this" footer.
+FOUNDER_SECTIONS = (
+    "my voice",
+    "phrases i use",
+    "phrases i refuse",
+    "posting voice",
+    "stories",
+    "topics i will not write",
+    "what 'good' looks like",
+)
 
 
 def soul_sections(text: str) -> dict:
-    """Map lowercased `## heading` -> section body."""
+    """Map lowercased `## heading` -> section body. Repeated headings join."""
     out = {}
     for sec in re.split(r"^##\s+", text, flags=re.MULTILINE)[1:]:
         head, _, body = sec.partition("\n")
-        out[head.strip().lower()] = body
+        head = head.strip().lower()
+        if head.startswith("how the"):
+            continue
+        # A `---` rule or a new `# ` title ends the section's own content.
+        body = re.split(r"^(?:---\s*$|#\s)", body, flags=re.MULTILINE)[0]
+        out[head] = out.get(head, "") + body
     return out
 
 
@@ -50,20 +67,15 @@ def bullets(body: str) -> list:
 
 
 def find_section(sections: dict, *keys: str) -> str:
-    for head, body in sections.items():
-        if any(k in head for k in keys):
-            return body
-    return ""
+    """Every section whose heading holds a key, joined."""
+    return "".join(body for head, body in sections.items() if any(k in head for k in keys))
 
 
 def check_soul(path: Path) -> dict:
     if not path.is_file():
         return {"present": False}
-    text = read_text(str(path))
-    # Only the operator-facing part; the "How the skill uses this" footer is boilerplate.
-    text = text.split("\n---\n")[0]
-    sections = soul_sections(text)
-    placeholders = len(PLACEHOLDER_RE.findall(text))
+    sections = soul_sections(read_text(str(path)))
+    placeholders = len(PLACEHOLDER_RE.findall(find_section(sections, *FOUNDER_SECTIONS)))
     return {
         "present": True,
         "placeholders_left": placeholders,

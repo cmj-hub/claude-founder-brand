@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0] — 2026-10-04
+
+Suite pass. Shared files merge, never overwrite.
+
+### Changed
+- Onboarding follows the shared-files contract: owns `audience`, `pillars`, `cadence`, `business_outcomes`; fills gaps in `operator`; touches only its own `SOUL.md` sections.
+- Onboarding offers `psp.vocabulary` and `evp.primary` when present. Neither is required.
+- "Works with the suite" section (step 10, standalone) replaces "Plugs into".
+- Descriptions say when to use each skill; the main one says what it is not for.
+- `models: ""` on every skill. `SOUL.md` and the good/bad examples are linked from the main skill.
+- Scripts are called as `${CLAUDE_PLUGIN_ROOT}/scripts/...`, with matching `Bash(...)` in `allowed-tools`.
+- README install: Claude Code marketplace lines and `npx skills add` for other agents.
+- `plugin.json`: repository, keywords, author url. Version 0.5.0.
+
 ## [0.4.0] — 2026-10-04
 
 The skills now run the scorer, know where the operator's files live, and load as a plugin.

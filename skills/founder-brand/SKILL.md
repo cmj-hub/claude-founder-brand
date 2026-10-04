@@ -3,15 +3,18 @@ name: founder-brand
 description: >
   Founder-led social system for B2B founders building a compounding personal
   brand. Generates LinkedIn-native posts on the Pillar / Proof / Process /
-  Person rotation, plans a 12-week content engine, scores drafts with a
-  deterministic scorer (no thought-leader voice, no engagement bait, no
-  AI-detection filler), and writes hooks across 5 archetypes. Drafts only —
-  never posts. Triggers on: "founder content", "LinkedIn post",
-  "founder-led social", "personal brand", "linkedin strategy", "content
-  pillar", "founder voice", "content engine", "B2B social", "score my post".
+  Person rotation from real receipts, plans a 12-week content engine, scores
+  drafts with a deterministic scorer (no thought-leader voice, no engagement
+  bait, no AI-detection filler), and writes hooks across 5 archetypes.
+  Drafts only — never posts. Use when the founder asks for founder content,
+  a LinkedIn post, founder-led social, personal brand or LinkedIn strategy,
+  content pillars, founder voice, a content engine, B2B social, or "score my
+  post". Not for cold outreach (use cold-email), post-opt-in email
+  sequences (use email-sequence), or landing-page copy (use landing-page).
 argument-hint: "[content <pillar> | engine | critique <post> | hooks <topic> | status | onboarding]"
-allowed-tools: Read Write Grep Glob
+allowed-tools: Read Write Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
 license: MIT
+models: ""
 
 ---
 
@@ -27,14 +30,16 @@ voice, no LinkedIn-influencer cadence, no AI-detection signals).
 Every mode starts here. No exceptions.
 
 1. Read `brand-config.json` and `SOUL.md` from the operator's project
-   folder (the current working directory).
+   folder (the current working directory). Both are shared by every
+   pack in the suite; this pack reads `operator`, `audience`, `pillars`,
+   `cadence`, `business_outcomes`, and its own `SOUL.md` sections.
 2. Either missing, or `SOUL.md` still holds `<placeholder>` lines →
    load `founder-brand-onboarding` and stop. A post without SOUL.md is
    generic by construction.
 3. For state (what's filled, which pillar is next, this week's count), run:
 
    ```
-   python3 "${CLAUDE_SKILL_DIR}/../../scripts/check_setup.py" --dir .
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py --dir .
    ```
 
    Exit 0 = ready. Exit 1 = setup incomplete; the `Next:` line says what.
@@ -110,7 +115,7 @@ The skill refuses to produce any of these:
 No LLM, no network.
 
 ```
-python3 "${CLAUDE_SKILL_DIR}/../../scripts/score_post.py" --file drafts/<draft>.md --soul SOUL.md
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file drafts/<draft>.md --soul SOUL.md
 ```
 
 - 0-100 across 6 axes: hook 20, specificity 20, voice fingerprints 15,
@@ -118,6 +123,10 @@ python3 "${CLAUDE_SKILL_DIR}/../../scripts/score_post.py" --file drafts/<draft>.
 - Banned phrases, engagement bait, refused phrases, and >3 hashtags are
   **blockers** — exit 1 at any score.
 - Exit 0 = ship (≥70, no blockers). Exit 1 = rewrite. Exit 2 = bad input.
+
+Calibration pair: [a good Proof post](../../examples/proof.good.md)
+scores 100; [an AI-pattern post](../../examples/proof.bad.md) scores 37
+and is blocked.
 
 If `cadence.auto_critique_before_post` is true (the default), every
 draft runs through the scorer before it is shown. Never skip it.
@@ -165,10 +174,20 @@ scorer's, not a guess.
 - [`founder-content`](../founder-content/SKILL.md) — one post on a specific pillar
 - [`linkedin-craft`](../linkedin-craft/SKILL.md) — hooks, skim format, critique
 
-## Plugs into
+## Works with the suite
 
-- **[claude-psp](https://github.com/cmj-hub/claude-psp)** — content pillars often map to PSP insights
-- **[claude-cold-email](https://github.com/cmj-hub/claude-cold-email)** — Process pillar content makes great PSP / framework / sequence assets
+This is step 10 of the GTM operator suite (`/plugin marketplace add cmj-hub/gtm-operator-skills`). It runs standalone.
+
+- **Reads:** `operator`, `audience`, `pillars`, `cadence`, `business_outcomes` from `brand-config.json`; `psp.vocabulary` (the buyer's words for the audience) and `evp.primary` (a Pillar post's claim) if present.
+- **Writes:** `audience`, `pillars`, `cadence`, `business_outcomes`, and this pack's `SOUL.md` sections. Merge at the field level; never overwrite another pack's keys.
+- **Before this:** psp (`/psp:psp`) and evp (`/evp:evp`), optional, when the posts should use the buyer's words and the outreach line.
+- **After this:** nothing. The operator publishes the drafts.
+
+If a companion pack is not installed, name it and its install line (`/plugin install <name>@gtm-operator-skills`); do not do its job inline.
+
+## References
+
+- [SOUL.md template](../../SOUL.md) — the founder-brand voice sections onboarding fills in
 
 ## Course
 
