@@ -111,6 +111,8 @@ Save the draft first (step 6), then run the scorer with the operator's SOUL:
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file drafts/<file>.md --soul SOUL.md
 ```
 
+- Add `--network <name>` when the operator names one network. A post aimed
+  at 10+ networks is a blocker: pick one network and write for it.
 - Exit 1 or any **Blockers** → rewrite the flagged lines and re-score.
   Up to 3 rounds; then show the operator the draft with the scorer's notes.
 - Exit 0 → record the score in the draft's frontmatter.

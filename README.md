@@ -57,7 +57,7 @@ Every skill lives at `skills/<name>/SKILL.md`, so the repo also loads as a Claud
 
 | Script | Job |
 |---|---|
-| `scripts/score_post.py` | 0–100 across hook, specificity, voice, anti-patterns, format, receipt. Banned phrases, engagement bait, your refused phrases, and >3 hashtags block at any score |
+| `scripts/score_post.py` | 0–100 across hook, specificity, voice, anti-patterns, format, receipt. Banned phrases, engagement bait, your refused phrases, >3 hashtags, and a 10+ network blast block at any score |
 | `scripts/check_setup.py` | What's filled, what's missing, which pillar is next, how many drafts this week |
 
 ## What you walk out with in 15 minutes
@@ -116,6 +116,9 @@ That one does ask for an email, and it enrols you in a short follow-up on the sa
 
 [**The Friday Signal**](https://jaymountconsulting.com/newsletter/signal) — one free edition a week on building GTM systems that compound. No pitch in it.
 
+## Privacy and security
+
+Everything runs on your machine. The scripts are standard-library Python; they read your draft, `SOUL.md`, and `brand-config.json` and open no network connection. Skills write only `brand-config.json`, `SOUL.md`, and `drafts/` in your project folder. No telemetry, no credentials, and nothing is posted for you. See [SECURITY.md](SECURITY.md).
 
 ## Next
 

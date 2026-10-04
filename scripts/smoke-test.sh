@@ -12,6 +12,8 @@ refute "bad example is rejected"           python3 scripts/score_post.py --file 
 refute "engagement bait blocks a 90+ post" python3 scripts/score_post.py --post "$(cat examples/proof.good.md)
 
 Thoughts?"
+check  "one-network example ships"         bash -c 'python3 scripts/score_post.py --stdin < examples/post-one-network.json'
+refute "ten-network blast is blocked"      bash -c 'python3 scripts/score_post.py --stdin < examples/post-blast.json'
 
 echo "=== check_setup.py ==="
 refute "template repo is not 'ready'"      python3 scripts/check_setup.py --dir .

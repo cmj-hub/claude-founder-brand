@@ -75,6 +75,52 @@ class Blockers(unittest.TestCase):
         self.assertIn("Blockers", proc.stdout)
 
 
+class NetworkBlast(unittest.TestCase):
+    TEN = ["LinkedIn", "X", "Threads", "Facebook", "Instagram", "TikTok", "YouTube", "Reddit", "Bluesky", "Mastodon"]
+
+    def test_ten_networks_list_blocks(self):
+        result = score_post.score_post(GOOD, networks=self.TEN)
+        self.assertEqual(result.total, 100)
+        self.assertTrue(any(b.startswith("Network blast") for b in result.blockers))
+
+    def test_nine_networks_do_not_block(self):
+        self.assertEqual(score_post.score_post(GOOD, networks=self.TEN[:9]).blockers, [])
+
+    def test_network_string_with_ten_parts_blocks(self):
+        self.assertIsNotNone(score_post.find_blast("a, b | c / d, e, f, g, h, i, j"))
+
+    def test_blast_wording_blocks(self):
+        for network in ("ten-network push", "10 networks", "Network blast"):
+            self.assertIsNotNone(score_post.find_blast(network), network)
+
+    def test_one_network_and_no_network_pass(self):
+        self.assertIsNone(score_post.find_blast("LinkedIn"))
+        self.assertIsNone(score_post.find_blast())
+
+    def test_post_body_is_not_checked(self):
+        result = score_post.score_post(GOOD + "\nWe tried 10 networks once.", network="LinkedIn")
+        self.assertFalse(any("Network blast" in b for b in result.blockers))
+
+    def test_examples_pass_and_refuse(self):
+        script = str(ROOT / "scripts" / "score_post.py")
+        for name, code in (("post-one-network.json", 0), ("post-blast.json", 1)):
+            proc = subprocess.run(
+                [sys.executable, script, "--stdin", "--format", "json"],
+                input=(ROOT / "examples" / name).read_text(encoding="utf-8"),
+                capture_output=True, text=True,
+            )
+            self.assertEqual(proc.returncode, code, name)
+            self.assertEqual(json.loads(proc.stdout)["total"], 100)
+
+    def test_network_flag_blocks(self):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "score_post.py"), "--post", GOOD, "--network", ",".join(self.TEN)],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(proc.returncode, 1)
+        self.assertIn("Network blast", proc.stdout)
+
+
 class SoulParsing(unittest.TestCase):
     def test_template_phrases_are_cleaned(self):
         used, refused = score_post.parse_soul_md(str(ROOT / "SOUL.md"))

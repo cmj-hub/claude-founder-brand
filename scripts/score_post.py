@@ -12,11 +12,13 @@ Scores a LinkedIn/X-style post 0-100 across 6 axes:
 
 Banned phrases (AI-detection, engagement bait, the operator's refused list)
 and hashtag stacks are blockers: the post exits 1 whatever its score.
+So is a network blast: one post aimed at 10 or more networks.
 
 USAGE:
     python3 score_post.py --post "..." [--soul SOUL.md]
     python3 score_post.py --file draft.md [--soul SOUL.md] [--format json]
-    python3 score_post.py --stdin   # JSON: {"post", "phrases_used", "phrases_refused"}
+    python3 score_post.py --file draft.md --network LinkedIn
+    python3 score_post.py --stdin   # JSON: {"post", "phrases_used", "phrases_refused", "network", "networks"}
 
 EXIT: 0 = ship (score >= --min-score, no blockers), 1 = rewrite, 2 = bad input.
 
@@ -100,6 +102,11 @@ NUMBER_RE = re.compile(
     r"|posts?|people|companies|teams?)\b))",
     re.IGNORECASE,
 )
+
+# A post aimed at every network at once. Checked against the network fields,
+# never the post body, so a story about cross-posting still scores.
+BLAST_RE = re.compile(r"\bten[- ]networks?\b|\b10[- ]networks?\b|\bnetwork blast\b", re.IGNORECASE)
+BLAST_MIN_NETWORKS = 10
 
 # Emoji and pictographs — a block of them reads as influencer cadence.
 EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
@@ -387,7 +394,20 @@ def find_blockers(post: str, phrases_refused: List[str]) -> List[str]:
     return blockers
 
 
-def score_post(post: str, phrases_used: Optional[List[str]] = None, phrases_refused: Optional[List[str]] = None, min_score: int = 70) -> PostScore:
+def find_blast(network: str = "", networks: Optional[List[str]] = None) -> Optional[str]:
+    """One post, one network. A post aimed at 10+ networks is a blast."""
+    networks = [n.strip() for n in (networks or []) if n.strip()]
+    if len(networks) >= BLAST_MIN_NETWORKS:
+        return f"Network blast: aimed at {len(networks)} networks — pick one and write for it"
+    parts = [part.strip() for part in re.split(r"[,|/]", network or "") if part.strip()]
+    if len(parts) >= BLAST_MIN_NETWORKS:
+        return f"Network blast: aimed at {len(parts)} networks — pick one and write for it"
+    if BLAST_RE.search("\n".join([network or ""] + networks)):
+        return "Network blast: the target says every network — pick one and write for it"
+    return None
+
+
+def score_post(post: str, phrases_used: Optional[List[str]] = None, phrases_refused: Optional[List[str]] = None, min_score: int = 70, network: str = "", networks: Optional[List[str]] = None) -> PostScore:
     phrases_used = phrases_used or []
     phrases_refused = phrases_refused or []
 
@@ -403,6 +423,9 @@ def score_post(post: str, phrases_used: Optional[List[str]] = None, phrases_refu
     total = sum(a.score for a in axes)
     max_total = sum(a.max_score for a in axes)
     blockers = find_blockers(post, phrases_refused)
+    blast = find_blast(network, networks)
+    if blast:
+        blockers.append(blast)
     if blockers:
         verdict = "Blocked — remove the banned lines, then re-score"
     elif total >= max(85, min_score):
@@ -484,13 +507,13 @@ def strip_frontmatter(text: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     source = parser.add_mutually_exclusive_group()
     source.add_argument("--post", default="", help="Post text")
     source.add_argument("--file", default=None, help="Path to a post file (a draft with --- frontmatter is fine)")
     source.add_argument("--stdin", action="store_true", help="Read a JSON object from stdin")
     parser.add_argument("--soul", default=None, help="Path to SOUL.md (extracts phrases lists)")
+    parser.add_argument("--network", default="", help="Where the post goes (one network). 10+ networks is a blocker")
     parser.add_argument("--min-score", type=int, default=70, help="Exit 0 at or above this score (default 70)")
     parser.add_argument("--format", default="text", choices=["text", "json"])
     args = parser.parse_args()
@@ -500,8 +523,13 @@ def main() -> int:
     if args.soul:
         used, refused = parse_soul_md(args.soul)
 
+    network = args.network
+    networks: List[str] = []
     if args.stdin:
         data = parse_json(read_stdin_text())
+        if isinstance(data.get("network"), str):
+            network = data["network"]
+        networks = _phrases(data.get("networks"))
         post = data.get("post", "")
         if not isinstance(post, str):
             post = ""
@@ -516,7 +544,7 @@ def main() -> int:
         print("--post, --file, or --stdin required.", file=sys.stderr)
         return 2
 
-    result = score_post(post, used, refused, args.min_score)
+    result = score_post(post, used, refused, args.min_score, network, networks)
     if args.format == "json":
         print(json.dumps(asdict(result), indent=2))
     else:
