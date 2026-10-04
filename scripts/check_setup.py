@@ -4,11 +4,17 @@ check_setup.py — Deterministic state check for the founder-brand pack.
 
 Reads the operator's brand-config.json, SOUL.md, and drafts/ folder and
 reports what is missing, which pillar is next in the rotation, and the
-next-best step. The founder-brand-kickoff skill runs this instead of
+next-best step. The founder-brand status mode runs this instead of
 guessing state.
 
 USAGE:
-    python3 check_setup.py [--dir .] [--format text|json] [--today YYYY-MM-DD]
+    python3 check_setup.py [--dir .] [--json] [--today YYYY-MM-DD]
+
+OUTPUT: text by default. When setup is incomplete every gap prints as
+"- <what is wrong> → <what to change>", then "Next: fix the lines above and
+run this again." When ready, the last line names the next post to draft.
+--json (alias of --format json) adds "reasons", "fixes" (parallel lists)
+and "next"; "missing" and "next_step" are unchanged.
 
 EXIT: 0 = ready to draft, 1 = setup incomplete, 2 = bad input.
 
@@ -28,6 +34,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from score_post import clean_phrase, fail_input, read_text  # noqa: E402
 
 PILLARS = ["pillar", "proof", "process", "person"]
+SETUP = "/founder-brand:founder-brand setup"
+RETRY = "fix the lines above and run this again."
 MIN_TOPICS = 3
 MIN_PHRASES = 5
 MIN_STORIES = 3
@@ -160,35 +168,54 @@ def build_state(root: Path, today: dt.date) -> dict:
             if not dates or (today - max(dates)).days > 28:
                 drift.append(p)
 
+    counts = config.get("topic_counts", {p: 0 for p in PILLARS})
+    short = ", ".join(f"{p} {n}" for p, n in counts.items() if n < MIN_TOPICS)
+    # (name, ok, legacy message, what is wrong, what to change)
     checks = [
         ("has_brand_config", config["present"],
-         "Run onboarding — brand-config.json is missing."),
+         "Run onboarding — brand-config.json is missing.",
+         "brand-config.json is missing", f"run {SETUP}"),
         ("has_soul", soul["present"],
-         "Run onboarding — SOUL.md is missing."),
+         "Run onboarding — SOUL.md is missing.",
+         "SOUL.md is missing", f"run {SETUP}"),
         ("soul_filled", soul.get("placeholders_left", 1) == 0,
-         f"Fill SOUL.md — {soul.get('placeholders_left', 0)} <placeholder> line(s) left."),
-        ("pillars_filled", all(n >= MIN_TOPICS for n in config.get("topic_counts", {p: 0 for p in PILLARS}).values()),
-         f"Fill pillar topic pools — need ≥{MIN_TOPICS} per pillar: {config.get('topic_counts', {})}."),
+         f"Fill SOUL.md — {soul.get('placeholders_left', 0)} <placeholder> line(s) left.",
+         f"SOUL.md has {soul.get('placeholders_left', 0)} <placeholder> line(s) left",
+         "replace each with your own words, or run " + SETUP),
+        ("pillars_filled", all(n >= MIN_TOPICS for n in counts.values()),
+         f"Fill pillar topic pools — need ≥{MIN_TOPICS} per pillar: {config.get('topic_counts', {})}.",
+         f"pillar topic pools under {MIN_TOPICS} topics: {short}",
+         f"add topics to brand-config.json pillars.<pillar>.topic_pool until each has {MIN_TOPICS}"),
         ("voice_fingerprints", soul.get("phrases_used", 0) >= MIN_PHRASES,
-         f"Mine your phrases-I-use list — need ≥{MIN_PHRASES}, have {soul.get('phrases_used', 0)}. Read your last 10 posts/emails."),
+         f"Mine your phrases-I-use list — need ≥{MIN_PHRASES}, have {soul.get('phrases_used', 0)}. Read your last 10 posts/emails.",
+         f"SOUL.md lists {soul.get('phrases_used', 0)} phrases you use (need {MIN_PHRASES})",
+         "add phrases from your last 10 posts or emails under ## Phrases I use a lot"),
         ("stories_reservoir", soul.get("stories", 0) >= MIN_STORIES,
-         f"Capture ≥{MIN_STORIES} stories in SOUL.md — have {soul.get('stories', 0)}. Anonymized but specific."),
+         f"Capture ≥{MIN_STORIES} stories in SOUL.md — have {soul.get('stories', 0)}. Anonymized but specific.",
+         f"SOUL.md lists {soul.get('stories', 0)} stories (need {MIN_STORIES})",
+         "add anonymized but specific receipts under ## Stories I lean on"),
         ("cadence_set", config.get("posts_per_week", 0) > 0,
-         "Pick a weekly cadence in brand-config.json — default 4 posts/week, 1 per pillar."),
+         "Pick a weekly cadence in brand-config.json — default 4 posts/week, 1 per pillar.",
+         "no weekly cadence in brand-config.json",
+         "set cadence.posts_per_week (default 4, one per pillar)"),
     ]
-    flags = {name: bool(ok) for name, ok, _ in checks}
-    missing = [msg for name, ok, msg in checks if not ok]
+    flags = {name: bool(ok) for name, ok, *_ in checks}
+    failed = [c for c in checks if not c[1]]
     if not (flags["has_brand_config"] and flags["has_soul"]):
-        missing = [checks[0][2] if not flags["has_brand_config"] else checks[1][2]]
+        failed = [checks[0] if not flags["has_brand_config"] else checks[1]]
+    missing = [c[2] for c in failed]
 
     per_week = config.get("posts_per_week", 0)
     this_week_done = per_week > 0 and len(this_week) >= per_week
     if missing:
         next_step = missing[0]
+        next_line = RETRY
     elif this_week_done:
         next_step = "This week's queue is done. Re-run on Monday for the next rotation."
+        next_line = "re-run on Monday for the next rotation."
     else:
         next_step = f"Draft this week's {next_pillar.title()} post from your topic pool."
+        next_line = f"/founder-brand:founder-brand content {next_pillar}"
 
     return {
         "ready": not missing,
@@ -204,6 +231,9 @@ def build_state(root: Path, today: dt.date) -> dict:
         "next_pillar": next_pillar,
         "drifting_pillars": drift,
         "next_step": next_step,
+        "reasons": [c[3] for c in failed],
+        "fixes": [c[4] for c in failed],
+        "next": next_line,
     }
 
 
@@ -229,14 +259,26 @@ def format_text(s: dict) -> str:
                  f"({s['published_this_week']} published) since {s['week_start']}")
     if s["drifting_pillars"]:
         lines.append(f"Drift:         no post in 4+ weeks — {', '.join(s['drifting_pillars'])}")
-    lines += ["", f"Next: {s['next_step']}"]
+    if s["reasons"]:
+        lines += ["", "## What to fix"]
+        lines += [f"- {what} → {fix}" for what, fix in zip(s["reasons"], s["fixes"])]
+        lines += ["", f"Next: {s['next']}"]
+    else:
+        lines += ["", f"Next: {s['next']} — {s['next_step']}"]
     return "\n".join(lines)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description="Check founder-brand setup and this week's queue. Exit 0 ready, 1 setup incomplete, 2 bad input.",
+        epilog="example: python3 scripts/check_setup.py --dir .   # run in your project folder",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--dir", default=".", help="Folder holding brand-config.json, SOUL.md, drafts/")
-    parser.add_argument("--format", default="text", choices=["text", "json"])
+    parser.add_argument("--json", dest="format", action="store_const", const="json",
+                        help="Print one JSON object (same as --format json)")
+    parser.add_argument("--format", dest="format", default="text", choices=["text", "json"],
+                        help=argparse.SUPPRESS)
     parser.add_argument("--today", default=None, help="Override today's date (YYYY-MM-DD)")
     args = parser.parse_args()
 

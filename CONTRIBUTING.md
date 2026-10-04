@@ -8,7 +8,7 @@ before you contribute.
 - **Bug reports** — open an issue with a reproducible case. The
   scripts in `scripts/` are deterministic, so bugs there are usually
   one-line fixes.
-- **New sub-skills** that extend the existing framework. Discuss in
+- **New modes** (`skills/founder-brand/modes/<mode>.md`) that extend the existing framework. Discuss in
   an issue first if it's a substantial addition.
 - **Calibration improvements** to the scoring scripts — if you can
   show a case where the script scores wrong, that's gold.
@@ -41,11 +41,12 @@ bash scripts/smoke-test.sh
 
 - [ ] Skill names follow the spec (lowercase, hyphens, ≤64 chars,
       directory matches `name:` in frontmatter)
-- [ ] Sub-skill descriptions include trigger phrases inline
-- [ ] Every skill lives at `skills/<name>/SKILL.md` — plugins load nothing else
+- [ ] The pack keeps one skill, `skills/founder-brand/SKILL.md`; new jobs are mode files
 - [ ] If you touch a script, run `python3 -m unittest discover -s tests` and
       `bash scripts/smoke-test.sh` and paste output in the PR
-- [ ] If you add a new sub-skill, list it in the README catalog table
+- [ ] If you add a new mode, list it in the README table, the routing
+      table and `argument-hint` in `skills/founder-brand/SKILL.md`, and add
+      a trigger eval under `evals/`
 - [ ] CHANGELOG.md updated
 - [ ] No new dependencies (pip packages or npm packages)
 
