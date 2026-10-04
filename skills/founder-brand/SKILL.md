@@ -107,6 +107,7 @@ The skill refuses to produce any of these:
 - Generic gratitude posts (no specifics, "grateful to everyone who...")
 - Multi-emoji blocks
 - Hashtag stacks (>3 hashtags)
+- Network blasts (one post aimed at 10+ networks; one post, one network)
 - Anything on the operator's `SOUL.md` → "Phrases I refuse" list
 
 ## The scorer
@@ -122,6 +123,9 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py --file drafts/<draft>.md --s
   anti-patterns 20, format 15, receipt 10.
 - Banned phrases, engagement bait, refused phrases, and >3 hashtags are
   **blockers** — exit 1 at any score.
+- Pass `--network LinkedIn` (or `network`/`networks` in `--stdin` JSON)
+  when the operator names a target. 10+ networks, or "ten-network" /
+  "network blast", is a blocker. Optional; omitted means not checked.
 - Exit 0 = ship (≥70, no blockers). Exit 1 = rewrite. Exit 2 = bad input.
 
 Calibration pair: [a good Proof post](../../examples/proof.good.md)

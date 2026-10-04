@@ -42,6 +42,11 @@ class ScorePostBadInput(unittest.TestCase):
         self.assertIn(result.returncode, (0, 1))
         self.assertNotIn("Traceback", result.stderr)
 
+    def test_networks_must_not_crash_when_not_a_list(self):
+        result = run(["--stdin"], stdin='{"post":"A real post.","network":7,"networks":"nope"}')
+        self.assertIn(result.returncode, (0, 1))
+        self.assertNotIn("Traceback", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

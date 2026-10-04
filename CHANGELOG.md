@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0] — 2026-10-04
+
+### Added
+- `score_post.py` blocks a network blast: a post aimed at 10+ networks (`networks` list, a `network` string with 10+ parts, or "ten-network" / "10 networks" / "network blast"). New `--network` flag; `network`/`networks` keys in `--stdin` JSON. Optional; the post body is not checked.
+- `examples/post-one-network.json` (ships) and `examples/post-blast.json` (blocked), with tests.
+- `SECURITY.md` and a README privacy section.
+
 ## [0.5.0] — 2026-10-04
 
 Suite pass. Shared files merge, never overwrite.
