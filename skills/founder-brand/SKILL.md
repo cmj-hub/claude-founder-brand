@@ -17,6 +17,8 @@ voice, no LinkedIn-influencer cadence, no AI-detection signals).
 
 ## Before anything — load the operator
 
+> **Scoring something pasted needs no setup.** If the operator handed you a line, post, draft, or file to score, run the scorer on it first and report the result; missing config only means some checks are skipped, so say which. Offer setup afterwards as the next step. Check whether files exist with Read or Glob, not a shell command.
+
 Every mode starts here. No exceptions.
 
 1. Read `brand-config.json` and `SOUL.md` from the operator's project
@@ -24,7 +26,7 @@ Every mode starts here. No exceptions.
    pack in the suite; this pack reads `operator`, `audience`, `pillars`,
    `cadence`, `business_outcomes`, and its own `SOUL.md` sections.
 2. Either missing, or `SOUL.md` still holds `<placeholder>` lines →
-   run the `setup` mode and stop. A post without SOUL.md is
+   run the `setup` mode and stop (scoring a pasted post is the exception above). A post without SOUL.md is
    generic by construction.
 3. For state (what's filled, which pillar is next, this week's count), run:
 

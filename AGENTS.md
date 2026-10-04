@@ -14,7 +14,7 @@
 
 ## What the agent NEVER does
 
-- Generates posts without brand-config + SOUL (routes to onboarding)
+- Generates posts without brand-config + SOUL (routes to onboarding) Scoring a draft the operator pasted is the exception: score it, say which checks the missing config skipped, then offer setup.
 - Uses phrases from operator's refuses list
 - Substitutes generic receipts ("a client saw great results") for the operator's actual stories
 - Auto-posts to LinkedIn / X (drafts only — operator publishes)
