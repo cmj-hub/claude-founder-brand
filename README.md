@@ -14,7 +14,7 @@ You have paid a ghostwriter who does not sound like you. Or you have stared at a
 
 The mechanism is the rotation plus a scorer. Pillar is the claim. Proof is the receipt. Process is how you actually do the work. Person is why you care. Skip a pillar for a month and the feed forgets which one you are.
 
-A Proof post with a named receipt — Series-B, 14 SQLs, 30 days — scored **96**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scored **37**. `scripts/score_post.py` is Python. No LLM. No paid API.
+A Proof post with a named receipt — Series-B, 14 SQLs, 30 days — scores **100**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scores **37** and is blocked outright. `scripts/score_post.py` is Python. No LLM. No paid API.
 
 The build guide teaches a human. The pack teaches an agent.
 
@@ -30,18 +30,40 @@ A $4K–8K/mo ghostwriter who cannot pass the scorer. You still have to live the
 
 This pack is the files in this repository. Open the tree on the host you already run. There is no remote installer.
 
-The scorer is Python in this repo.
+Every skill lives at `skills/<name>/SKILL.md`, so the repo loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
+
+## What's in the pack
+
+| Skill | Job |
+|---|---|
+| `founder-brand` | Entry point. Loads your `brand-config.json` + `SOUL.md`, routes by argument: `content <pillar>`, `engine`, `critique`, `hooks`, `status`, `onboarding` |
+| `founder-brand-onboarding` | 15-minute setup — writes `SOUL.md` (voice, phrases, stories) and `brand-config.json` (audience, pillar pools, cadence) in your project folder |
+| `founder-brand-kickoff` | Reads state, says what's next, runs the weekly queue |
+| `founder-content` | One post on one pillar, from one of your receipts, scored and saved to `drafts/` |
+| `linkedin-craft` | Five hook variants, skim formatting, scored critique |
+
+| Script | Job |
+|---|---|
+| `scripts/score_post.py` | 0–100 across hook, specificity, voice, anti-patterns, format, receipt. Banned phrases, engagement bait, your refused phrases, and >3 hashtags block at any score |
+| `scripts/check_setup.py` | What's filled, what's missing, which pillar is next, how many drafts this week |
 
 ## What you walk out with in 15 minutes
 
 Artifact: `examples/proof.good.md`.
 
 ```
-python3 scripts/score_post.py --post "$(cat examples/proof.good.md)"
-python3 scripts/score_post.py --post "$(cat examples/proof.bad.md)"
+python3 scripts/score_post.py --file examples/proof.good.md
+python3 scripts/score_post.py --file examples/proof.bad.md
 ```
 
-One Proof post from the sample receipt. Then yours — from a fact that actually happened.
+One Proof post from the sample receipt. Then yours — from a fact that actually happened:
+
+```
+python3 scripts/score_post.py --file drafts/<your-draft>.md --soul SOUL.md
+python3 scripts/check_setup.py --dir .
+```
+
+Exit 0 is ship. Exit 1 is rewrite. `--format json` for tooling.
 
 ## What this pack will not do
 

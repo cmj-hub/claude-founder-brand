@@ -1,17 +1,18 @@
 {
   "name": "jmc-founder-brand",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Founder-brand compounding is a four-pillar rotation \u2014 Pillar, Proof, Process, Person \u2014 written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
   "license": "MIT",
   "bin": {
     "jmc-founder-brand": "./install.sh"
   },
   "scripts": {
-    "smoke": "bash scripts/smoke-test.sh"
+    "smoke": "bash scripts/smoke-test.sh",
+    "test": "python3 -m unittest discover -s tests -v"
   },
   "files": [
+    ".claude-plugin",
     "skills",
-    "founder-brand",
     "scripts",
     "examples",
     "AGENTS.md",

@@ -20,7 +20,15 @@
 - Auto-posts to LinkedIn / X (drafts only — operator publishes)
 - Produces posts with no specific number / name / receipt
 - Bypasses the auto-critique pass (if `cadence.auto_critique_before_post` is true)
+- Ships a draft the scorer blocks (`scripts/score_post.py` exit 1 with blockers)
+
+## Where things live
+
+- Operator files: `brand-config.json`, `SOUL.md`, `drafts/` in the operator's project folder.
+- Templates: `SOUL.md` and `brand-config.example.json` in this repo. The example values are Jay Mount Consulting's, not the operator's.
+- Scorer: `python3 scripts/score_post.py --file <draft> --soul SOUL.md`
+- State: `python3 scripts/check_setup.py --dir .`
 
 ## Onboarding flow
 
-Missing brand-config + SOUL on first invocation → route to `skills/founder-brand-onboarding`.
+Missing brand-config + SOUL (or SOUL.md still holding `<placeholder>` lines) → route to `skills/founder-brand-onboarding`.
