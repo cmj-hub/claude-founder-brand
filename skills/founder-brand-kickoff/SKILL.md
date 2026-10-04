@@ -1,8 +1,8 @@
 ---
 name: founder-brand-kickoff
-description: Adaptive router for the founder-brand skill pack. Detects state (brand-config? SOUL? pillars filled? cadence set? recent posts logged?) and picks the next-best step. Loaded by the main founder-brand skill on bare invocation.
+description: Adaptive router for the founder-brand skill pack. Runs scripts/check_setup.py to detect state (brand-config? SOUL filled? pillars filled? cadence set? this week's drafts?) and picks the next-best step. Loaded by the main founder-brand skill on bare invocation or "status". Triggers on "where do I start", "what's next for my content", "founder-brand status".
 user-invocable: false
-allowed-tools: Read Grep
+allowed-tools: Read Grep Glob
 license: MIT
 
 ---
@@ -11,34 +11,44 @@ license: MIT
 
 ## Activation
 
-Loaded by `founder-brand` on bare invocation, or:
+Loaded by `founder-brand` on bare invocation or `status`, or:
 - "Where do I start"
 - "What's next for my content"
 
 ## State detection
 
-```python
-state = {
-    "has_brand_config":  file_exists("brand-config.json"),
-    "has_soul":          file_exists("SOUL.md"),
-    "pillars_filled":    all 4 pillars have >=3 topics,
-    "voice_fingerprints": len(soul.phrases_used) >= 5,
-    "stories_reservoir": len(soul.stories) >= 3,
-    "cadence_set":       brand_config.cadence.posts_per_week > 0,
-    "this_week_done":    posts_logged_this_week >= cadence.posts_per_week,
-}
+Don't guess state — run the checker from the operator's project folder:
+
 ```
+python3 "${CLAUDE_SKILL_DIR}/../../scripts/check_setup.py" --dir . --format json
+```
+
+It reads `brand-config.json`, `SOUL.md`, and `drafts/*.md` and returns:
+
+| Field | Meaning |
+|---|---|
+| `checks.has_brand_config` / `checks.has_soul` | Files exist |
+| `checks.soul_filled` | No `<placeholder>` lines left in `SOUL.md` |
+| `checks.pillars_filled` | All 4 pillars have ≥3 topics |
+| `checks.voice_fingerprints` | ≥5 phrases-I-use |
+| `checks.stories_reservoir` | ≥3 stories |
+| `checks.cadence_set` | `cadence.posts_per_week` > 0 |
+| `posts_this_week` / `this_week_done` | Drafts dated Monday→today vs cadence |
+| `next_pillar` | Next slot after the last draft, in `rotation_order` |
+| `drifting_pillars` | Pillars with no draft in 4+ weeks |
+| `next_step` | The one thing to do now |
+
+If Bash is unavailable, read the files directly and apply the same rules.
 
 | State | Route to |
 |---|---|
-| `!has_brand_config OR !has_soul` | `founder-brand-onboarding` |
-| `!pillars_filled` | "Fill pillar topic pools (need ≥3 per pillar). Re-run onboarding to add." |
-| `!voice_fingerprints` | "Mine phrases-I-use list — need ≥5. Read your last 10 posts/emails." |
-| `!stories_reservoir` | "Capture ≥3 stories. Anonymized but specific." |
-| `!cadence_set` | "Pick weekly cadence — default 4 posts/week, 1 per pillar" |
+| `!has_brand_config OR !has_soul OR !soul_filled` | `founder-brand-onboarding` |
+| `!pillars_filled` | "Fill pillar topic pools (need ≥3 per pillar)." → onboarding Step 7 |
+| `!voice_fingerprints` | "Mine phrases-I-use list — need ≥5. Read your last 10 posts/emails." → onboarding Step 2 |
+| `!stories_reservoir` | "Capture ≥3 stories. Anonymized but specific." → onboarding Step 5 |
+| `!cadence_set` | "Pick weekly cadence — default 4 posts/week, 1 per pillar." → onboarding Step 8 |
 | `this_week_done` | "This week's queue done. Re-run on Monday for next rotation." |
-| else | "Generate this week's post for the next pillar in rotation. Topic suggestion from your pool." |
-```
+| else | Weekly mode for `next_pillar` |
 
 ## Welcome flow
 
@@ -54,21 +64,23 @@ You're at step 1 of 5:
 2. ⬜ Mine ≥5 voice fingerprints from your existing writing
 3. ⬜ Capture ≥3 stories for the Proof reservoir
 4. ⬜ Generate first week's posts (1 per pillar in rotation)
-5. ⬜ Iterate weekly — auto-critique → ship → score
+5. ⬜ Iterate weekly — draft → score → ship → mark published
 
 Step 1 takes ~15 minutes. Ready? (y/n)
 ```
 
+Tick the steps the checker already passes.
+
 ## Weekly mode
 
-When `cadence_set` and `this_week_done == false`:
+When setup is complete and `this_week_done == false`:
 
 ```
-# This week's queue
+# This week's queue — <posts_this_week> of <posts_per_week> drafted
 
-You're on the <PILLAR> rotation slot. Topic suggestion from your pool:
+You're on the <next_pillar> rotation slot. Topic suggestion from your pool:
 
-  "<Topic from brand-config.pillars.<pillar>.topic_pool>"
+  "<Topic from brand-config.pillars.<next_pillar>.topic_pool>"
 
 Want me to draft it? (y/n)
 
@@ -77,18 +89,24 @@ Other pool options for this slot:
   "<Topic 3>"
 ```
 
+Prefer topics not already used in `drafts/` (grep the `topic:` lines).
+If `drifting_pillars` is non-empty, say so and offer that pillar first.
+
+On "y", load `founder-content` with the pillar and topic locked.
+
 ## Status mode
 
-`/founder-brand status`:
+`/founder-brand status` → run the checker with `--format text` and show
+its output as-is, then one line on the next step:
 
 ```
-# Founder-brand program status
+# Founder-brand status
 
-Brand config:        ✓ brand-config.json
-SOUL:                ✓ SOUL.md (8 phrases, 7 refused, 5 stories)
-Pillar pools:        ✓ All 4 pillars have ≥3 topics
-Cadence:             ✓ 4 posts/week, Pillar→Proof→Process→Person
-This week (Mon-Sun): 2 of 4 posts logged
+Brand config:  ✓ brand-config.json
+SOUL:          ✓ SOUL.md (8 phrases, 7 refused, 5 stories, 0 placeholders left)
+Pillar pools:  ✓ pillar 3, proof 3, process 3, person 3
+Cadence:       ✓ 4 posts/week, Pillar → Proof → Process → Person
+This week:     2 of 4 drafted (1 published) since 2026-10-05
 
-Next: Wednesday — Process pillar slot. Suggestion: "<topic>"
+Next: Draft this week's Process post from your topic pool.
 ```

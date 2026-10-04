@@ -1,7 +1,7 @@
 ---
 name: founder-brand-onboarding
-description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes. This is THE most important file in the pack — the whole point is sounding like the operator, not ChatGPT.
-user-invocable: false
+description: First-run interactive setup for the founder-brand skill pack. Walks the operator through brand-config.json (audience, 4-pillar topic pools, cadence, drive-to URLs) and SOUL.md (voice fingerprints, phrases-I-refuse, stories reservoir, won't-write boundaries) in ~15 minutes, or refreshes them quarterly. Triggers on "set up founder-brand", "configure my voice", "founder-brand onboarding", "refresh my SOUL.md".
+argument-hint: "[refresh]"
 allowed-tools: Read Write Grep
 license: MIT
 
@@ -18,9 +18,34 @@ produces LinkedIn-influencer-voice slop.
 Loaded automatically by `founder-brand` on missing brand-config.json
 or SOUL.md.
 
-Also user-invocable: "Set up founder-brand onboarding", "Configure voice".
+Also user-invocable: "Set up founder-brand onboarding", "Configure voice",
+or `/founder-brand onboarding refresh`.
+
+## Where the files go
+
+Both files live in the operator's project folder (the current working
+directory), not inside the plugin. Start from the templates that ship
+with the pack:
+
+- `${CLAUDE_SKILL_DIR}/../../SOUL.md` → `./SOUL.md`
+- `${CLAUDE_SKILL_DIR}/../../brand-config.example.json` → `./brand-config.json`
+
+Keep the template's `##` headings exactly — `scripts/score_post.py` and
+`scripts/check_setup.py` find the phrase lists and stories by heading.
+Replace every `<placeholder>` line; the checker counts the ones left.
+
+If either file already exists, this is a **refresh**: read it, show
+what's there step by step, and change only what the operator changes.
+Never overwrite a filled file wholesale.
+
+The example values in the templates (PSP, Series-B SaaS, JMC URLs) are
+Jay Mount Consulting's. None of them survive into the operator's files
+unless the operator says they're true for them.
 
 ## Workflow
+
+Ask one step at a time. Write after each step so a half-finished
+onboarding still saves progress.
 
 ### Step 1 — Voice in 3 sentences
 
@@ -51,7 +76,12 @@ Examples (not yours — yours will differ):
   "What actually moved the number..."
 
 5-10 phrases. These show up naturally in every output.
+
+Or paste 3-5 of your own posts / emails and I'll pull the candidates.
 ```
+
+If the operator pastes writing, extract repeated phrases and openers
+and show them for a yes/no. Only confirmed phrases go in.
 
 Save to `SOUL.md`.
 
@@ -172,11 +202,21 @@ BUSINESS OUTCOMES:
 
 Save to `brand-config.cadence` + `brand-config.business_outcomes`.
 
-### Step 9 — Write the files + smoke test
+### Step 9 — Verify the files + smoke test
+
+Run the checker. Exit 0 means setup is complete; otherwise its `Next:`
+line names the gap — go back to that step.
+
+```
+python3 "${CLAUDE_SKILL_DIR}/../../scripts/check_setup.py" --dir .
+```
+
+Create an empty `drafts/` folder — `founder-content` saves posts there.
 
 ```
 ✓ brand-config.json — audience + 4 pillars (×3 topics each) + cadence + outcomes
-✓ SOUL.md — voice + 8 phrases used + 7 refused + 5 stories
+✓ SOUL.md — voice + 8 phrases used + 7 refused + 5 stories, 0 placeholders
+✓ drafts/
 
 Try a smoke test:
 > Generate a Proof pillar post about <one of your stories>
@@ -187,6 +227,7 @@ The output will:
 - Cite the actual story (not invent one)
 - Match your voice settings
 - Be ≤200 words, 1-sentence opener, scannable body, no engagement bait
+- Pass scripts/score_post.py with your SOUL.md
 ```
 
 ### Step 10 — Refresh cadence

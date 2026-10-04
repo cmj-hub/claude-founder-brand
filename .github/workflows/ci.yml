@@ -1,5 +1,5 @@
 # JMC skill-pack CI
-# Validates SKILL.md frontmatter, lints Python scripts, runs smoke tests.
+# Validates SKILL.md frontmatter, lints Python scripts, runs unit + smoke tests.
 # Runs on every PR + every push to main.
 #
 # No secrets required. Free unlimited minutes on public repos.
@@ -45,9 +45,19 @@ jobs:
               print(f'  ✗ plugin.json missing: {missing}')
               exit(1)
           print(f'  ✓ plugin.json valid: name={d[\"name\"]}, version={d[\"version\"]}')
+          pkg = json.load(open('package.json'))
+          if pkg['version'] != d['version']:
+              print(f'  ✗ package.json version {pkg[\"version\"]} != plugin.json {d[\"version\"]}')
+              exit(1)
           "
 
-      - name: Validate install.sh + install.ps1 syntax
+      - name: Every SKILL.md is under skills/ (plugins only load skills/)
+        run: |
+          stray=$(find . -name SKILL.md -not -path './skills/*' -not -path './.git/*' -not -path './node_modules/*')
+          if [ -n "$stray" ]; then echo "  ✗ outside skills/: $stray"; exit 1; fi
+          echo "  ✓ all skills under skills/"
+
+      - name: Validate install.sh syntax
         run: |
           if [ -f install.sh ]; then
             bash -n install.sh && echo "  ✓ install.sh: bash syntax OK"
@@ -103,6 +113,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Run unit tests
+        run: python3 -m unittest discover -s tests -v
 
       - name: Run pack-specific smoke tests
         run: |

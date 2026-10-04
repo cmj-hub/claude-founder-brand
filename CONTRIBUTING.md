@@ -33,6 +33,8 @@ before you contribute.
 git clone https://github.com/cmj-hub/claude-founder-brand.git
 cd claude-founder-brand
 python3 scripts/score_post.py --help
+python3 -m unittest discover -s tests
+bash scripts/smoke-test.sh
 ```
 
 ## Pull-request checklist
@@ -40,23 +42,24 @@ python3 scripts/score_post.py --help
 - [ ] Skill names follow the spec (lowercase, hyphens, ≤64 chars,
       directory matches `name:` in frontmatter)
 - [ ] Sub-skill descriptions include trigger phrases inline
-- [ ] If you touch a script, smoke-test it and paste output in the PR
+- [ ] Every skill lives at `skills/<name>/SKILL.md` — plugins load nothing else
+- [ ] If you touch a script, run `python3 -m unittest discover -s tests` and
+      `bash scripts/smoke-test.sh` and paste output in the PR
 - [ ] If you add a new sub-skill, list it in the README catalog table
 - [ ] CHANGELOG.md updated
 - [ ] No new dependencies (pip packages or npm packages)
 
 ## Reporting calibration issues with scoring scripts
 
-If a script (`spam_word_lint.py` / `score_psp.py` / `score_evp.py` /
-`score_post.py`) scores something obviously wrong:
+If `score_post.py` scores something obviously wrong:
 
 1. Paste the input that produced the wrong score
 2. State your expected score + actual score
 3. Note which axis is mis-calibrated
 
-The scripts are calibrated against ~1,000 real B2B campaigns. New
-calibration cases add to the lexicons in version-controlled JSON, not
-to the script logic — keep the deterministic path stable.
+New calibration cases go in `tests/test_scoring.py` alongside the
+lexicon change in `score_post.py`. The examples in `examples/` are
+pinned (100 and 37) — a change that moves them updates the README too.
 
 ## License
 

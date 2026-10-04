@@ -23,7 +23,9 @@ Loaded by `founder-brand` on:
 
 ### Mode A — generate 5 hook variants
 
-Given a topic, produce one hook per archetype:
+Given a topic, produce one hook per archetype. Fill the numbers from the
+operator's stories in `SOUL.md`; where none fits, leave `<metric>` for
+the operator rather than inventing one.
 
 ```markdown
 # Hook variants — <topic>
@@ -63,22 +65,39 @@ Take a finished post and reformat for LinkedIn-native skim:
 #hashtag1 #hashtag2
 ```
 
-Max 200 words. Max 3 hashtags. No emoji blocks.
+Max 200 words. Max 3 hashtags. No emoji blocks. Keep the operator's
+words — reformatting doesn't rewrite.
 
 ### Mode C — critique a draft
+
+Score with the scorer first. Its numbers are the score — don't
+re-estimate them. Save pasted text to a scratch file, or pass a draft
+path straight through:
+
+```
+python3 "${CLAUDE_SKILL_DIR}/../../scripts/score_post.py" --file <draft> --soul SOUL.md --format json
+```
+
+Drop `--soul` if the operator has no `SOUL.md` yet, and say the voice
+axis was skipped. If Bash is unavailable, estimate each axis by hand
+and label the score "estimated".
 
 ```markdown
 # Draft critique
 
-**Voice score:** <0-100>
+**Score:** <total>/100 — <verdict>
 
-| Dimension | Score | Issue |
+| Axis | Score | Issue |
 |---|---|---|
-| Hook strength | <0-25>/25 | <one sentence> |
-| Specificity (receipts) | <0-25>/25 | <one sentence> |
-| Voice (founder, not thought-leader) | <0-25>/25 | <one sentence> |
-| Format (LinkedIn-skim) | <0-15>/15 | <one sentence> |
-| No anti-patterns | <0-10>/10 | <list any hits> |
+| Hook | <0-20>/20 | <one sentence> |
+| Specificity | <0-20>/20 | <one sentence> |
+| Voice fingerprints | <0-15>/15 | <one sentence> |
+| Anti-patterns | <0-20>/20 | <list any hits> |
+| Format (skim) | <0-15>/15 | <one sentence> |
+| Receipt | <0-10>/10 | <one sentence> |
+
+## Blockers
+<each scorer blocker — these fail the post at any score; "None" if empty>
 
 ## Single weakest line
 Original: "<line>"
@@ -93,6 +112,9 @@ Rationale: <one sentence>
 <ship / ship-after-rewrite / start-over>
 ```
 
+The scorer can't judge whether a receipt is true or the post makes one
+claim. Read for both and add them to the issues if they fail.
+
 ### Mode D — better hook for topic
 
 User says: "I want to write about <topic>. Give me a better hook."
@@ -101,5 +123,5 @@ the strongest.
 
 ## References
 
-- `../../founder-brand/SKILL.md` — the full framework + voice rubric
-- The **Founder-Brand Compounding** course:
+- [`../founder-brand/SKILL.md`](../founder-brand/SKILL.md) — the full framework + voice rubric
+- [Founder-Brand Compounding](https://jaymountconsulting.com/learn/courses/founder-brand-compounding) — the course
