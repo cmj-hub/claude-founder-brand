@@ -100,6 +100,12 @@ It will not post for you. It will not fill a 12-week calendar on the first run. 
 
 This pack drafts and scores. It will not pick this quarter's PSP, ingest your CRM, or update when Gmail changes the spam window. Those are judgement calls and live data. This pack gives you the instrument and the rubric; you bring the account.
 
+## The data step this pack leaves to you
+
+This pack drafts and scores the post. Company research that feeds the receipt is a separate job.
+
+Run [Company research](https://thegtmdirectory.com/jobs/company-research) on The GTM Directory — tools that pull public company facts so Proof posts cite a real receipt.
+
 ## Will this sound like LinkedIn thought leadership?
 
 No. The scorer flags "Stop. Read this.", "What's your take?", "delve into", and "in today's fast-paced world". A real receipt is required. That is a refuse, not a style.
