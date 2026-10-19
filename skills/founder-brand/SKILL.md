@@ -2,7 +2,7 @@
 name: founder-brand
 description: "Founder-led LinkedIn system for B2B founders: drafts posts on the Pillar / Proof / Process / Person rotation from real receipts, plans a 12-week content engine, writes hooks, and scores drafts with a deterministic scorer (no thought-leader voice, engagement bait or AI filler). Drafts only, never posts. Use when the founder asks for a LinkedIn post, founder content, personal brand or content pillars, founder voice, a content plan, or \"score my post\". Not for cold outreach (use cold-email), post-opt-in email (use email-sequence), or landing-page copy (use landing-page)."
 argument-hint: "[content <pillar> | engine | critique <post> | hooks <topic> | format | status | setup]"
-allowed-tools: Read Write Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
+allowed-tools: Read Write(./drafts/**) Write(./SOUL.md) Write(./brand-config.json) Grep Glob Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check_setup.py:*) Bash(python3 ${CLAUDE_PLUGIN_ROOT}/scripts/score_post.py:*)
 license: MIT
 models: ""
 
