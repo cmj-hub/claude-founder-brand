@@ -85,7 +85,7 @@ the post won't pull demand.
 
 | # | Hook | Pattern | Example |
 |---|---|---|---|
-| 1 | **Contrarian** | "Most teams do X. We do Y instead — here's why." | "Most outbound programs blame the SDRs. The actual issue is upstream." |
+| 1 | **Contrarian** | "Most teams do X. We do Y instead — here's why." | "Most outbound programs blame the copy. The actual issue is upstream." |
 | 2 | **Specific receipt** | "<Specific outcome>: <metric>. <The unexpected lever>." | "14 SQLs in 30 days. The lever wasn't the sequence — it was the PSP." |
 | 3 | **Confession** | "I used to think X. I was wrong. Here's what I learned." | "I used to think cold email volume was the lever. After 3 failed programs, I figured out it wasn't." |
 | 4 | **Pattern observation** | "I've reviewed N <thing>. Here's the one pattern that keeps showing up." | "Reviewed 60 cold email programs this year. One pattern shows up in every program that's hitting." |

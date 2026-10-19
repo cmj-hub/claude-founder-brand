@@ -15,7 +15,7 @@
   "pillars": {
     "pillar": {
       "topic_pool": [
-        "Why most outbound programs fail at the PSP layer, not the SDR layer",
+        "Why most outbound programs fail at the PSP layer, not the sequence layer",
         "The Schwartz model and why B2B copy ignores it",
         "What 'compounding' actually means in GTM"
       ]
