@@ -33,7 +33,7 @@ You have paid a ghostwriter who does not sound like you. Or you have stared at a
 
 The mechanism is the rotation plus a scorer. Pillar is the claim. Proof is the receipt. Process is how you actually do the work. Person is why you care. Skip a pillar for a month and the feed forgets which one you are.
 
-A Proof post with a named receipt. Series-B, 14 SQLs, 30 days: scores **100**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scores **37** and is blocked outright. `scripts/score_post.py` is Python. No LLM. No paid API.
+A Proof post with a named receipt. The fictional sample, Series-B, 14 SQLs, 30 days: scores **100**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scores **37** and is blocked outright. `scripts/score_post.py` is Python. No LLM. No paid API.
 
 The build guide teaches a human. The pack teaches an agent.
 
@@ -116,7 +116,7 @@ No. It drafts and scores. You publish. Auto-posting is not the job. Sounding lik
 
 ## What is a receipt?
 
-A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite." Not "great results." Proof posts without a receipt fail the scorer.
+A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite" (a fictional example, not a JMC result). Not "great results." Proof posts without a receipt fail the scorer.
 
 ## On the site
 

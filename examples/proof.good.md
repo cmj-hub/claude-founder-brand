@@ -11,3 +11,5 @@ Specifically:
 Reply rate went 2% to 11%.
 
 Try anchoring outbound on what they just did, not who they are.
+
+(Example post. The client and figures are fictional.)
