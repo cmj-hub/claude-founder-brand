@@ -1,4 +1,4 @@
-Most outbound programs blame the SDRs. The real issue is upstream.
+Most outbound programs blame the copy. The real issue is upstream.
 
 Series-B SaaS, 30 days, 14 SQLs.
 The lever wasn't the sequence — it was a PSP rewrite.
