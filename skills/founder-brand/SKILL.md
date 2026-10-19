@@ -75,7 +75,7 @@ pillar for 4+ weeks (drift). The 4 pillars:
 | 3 | **Process** | How you actually do the work / SOP / framework | "Our 7-step Pain Signal Profile worksheet, with the 3 places teams get stuck." |
 | 4 | **Person** | The human behind the work — story, stake, reason you care | "I shipped 3 outbound programs that failed before I figured out the PSP layer." |
 
-The examples are Jay Mount Consulting's. The operator's pillars come
+The examples are JMC's. The operator's pillars come
 from `brand-config.json` → `pillars.<pillar>.topic_pool`.
 
 ## The 5 hook archetypes

@@ -50,7 +50,7 @@ If this pack's fields or sections already exist, this is a
 what the operator changes.
 
 The example values in the templates (PSP, Series-B SaaS, JMC URLs) are
-Jay Mount Consulting's. None of them survive into the operator's files
+JMC's. None of them survive into the operator's files
 unless the operator says they're true for them.
 
 ## Workflow
