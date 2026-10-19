@@ -21,24 +21,24 @@ python3 scripts/score_post.py --file examples/proof.good.md   # exit 0, prints 1
 python3 scripts/score_post.py --file examples/proof.bad.md    # exit 1: - blocker: AI-detection phrase: 'delve into' → cut it and say the plain thing in your own words
 ```
 
-Part of the GTM operator suite — `/plugin install gtm@gtm-operator-skills` installs all ten.
+Part of the GTM operator suite: `/plugin install gtm@gtm-operator-skills` installs all ten.
 
 Add the [gtm-operator mod](https://github.com/cmj-hub/gtm-operator-claude-mod) to see the suite's next step above your prompt and keep `brand-config.json` from being overwritten: `/plugin install gtm-operator@gtm-operator-skills`.
 
 > "In today's fast-paced world, what's your take?" is not a founder post. A named receipt is.
 
-Founder-brand compounding is a four-pillar rotation — Pillar, Proof, Process, Person — written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.
+Founder brand is a four-pillar rotation. Pillar, Proof, Process, Person: written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.
 
 You have paid a ghostwriter who does not sound like you. Or you have stared at a blank LinkedIn box and written "3 things I learned this week" because the feed rewards it. The feed also trains a reader to skip you.
 
 The mechanism is the rotation plus a scorer. Pillar is the claim. Proof is the receipt. Process is how you actually do the work. Person is why you care. Skip a pillar for a month and the feed forgets which one you are.
 
-A Proof post with a named receipt — Series-B, 14 SQLs, 30 days — scores **100**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scores **37** and is blocked outright. `scripts/score_post.py` is Python. No LLM. No paid API.
+A Proof post with a named receipt. Series-B, 14 SQLs, 30 days: scores **100**. The AI-pattern post (`delve into`, `fast-paced world`, `What's your take?`) scores **37** and is blocked outright. `scripts/score_post.py` is Python. No LLM. No paid API.
 
 The build guide teaches a human. The pack teaches an agent.
 
 <p align="center">
-  <img src="./assets/demo.gif" alt="LinkedIn posts skill — proof post 96, AI-pattern post 37" width="100%">
+  <img src="./assets/demo.gif" alt="LinkedIn posts skill: proof post 96, AI-pattern post 37" width="100%">
 </p>
 
 ## What this replaces
@@ -64,7 +64,7 @@ One skill, `founder-brand`. It loads your `brand-config.json` + `SOUL.md` and ro
 | Mode | Job |
 |---|---|
 | `status` (no argument) | Reads state, says what's next, runs the weekly queue |
-| `setup` | 15-minute setup — writes `SOUL.md` (voice, phrases, stories) and `brand-config.json` (audience, pillar pools, cadence) in your project folder. Shared operator questions come from `/gtm:setup` once for the suite |
+| `setup` | 15-minute setup: writes `SOUL.md` (voice, phrases, stories) and `brand-config.json` (audience, pillar pools, cadence) in your project folder. Shared operator questions come from `/gtm:setup` once for the suite |
 | `content <pillar>` | One post on one pillar, from one of your receipts, scored and saved to `drafts/` |
 | `engine` | 12-week plan across the four pillars |
 | `hooks <topic>`, `format`, `critique <post>` | Five hook variants, skim formatting, scored critique |
@@ -85,7 +85,7 @@ python3 scripts/score_post.py --file examples/proof.good.md
 python3 scripts/score_post.py --file examples/proof.bad.md
 ```
 
-One Proof post from the sample receipt. Then yours — from a fact that actually happened:
+One Proof post from the sample receipt. Then yours: from a fact that actually happened:
 
 ```
 python3 scripts/score_post.py --file drafts/<your-draft>.md --soul SOUL.md
@@ -104,7 +104,7 @@ This pack drafts and scores. It will not pick this quarter's PSP, ingest your CR
 
 This pack drafts and scores the post. Company research that feeds the receipt is a separate job.
 
-Run [Company research](https://thegtmdirectory.com/jobs/company-research) on The GTM Directory — tools that pull public company facts so Proof posts cite a real receipt.
+Run [Company research](https://thegtmdirectory.com/jobs/company-research) on The GTM Directory: tools that pull public company facts so Proof posts cite a real receipt.
 
 ## Will this sound like LinkedIn thought leadership?
 
@@ -120,23 +120,23 @@ A named, checkable fact. "Series-B SaaS, 14 SQLs in 30 days from a PSP rewrite."
 
 ## On the site
 
-- [Founder Brand pack](https://jaymountconsulting.com/skills/claude-founder-brand) — this pack's page
-- [Skill packs catalog](https://jaymountconsulting.com/skills) — install paths + every pack
-- [Course twin](https://jaymountconsulting.com/learn/courses/founder-brand-compounding) — human build guide for this pack
+- [Founder Brand pack](https://jaymountconsulting.com/skills/claude-founder-brand): this pack's page
+- [Skill packs catalog](https://jaymountconsulting.com/skills): install paths + every pack
+- [Course twin](https://jaymountconsulting.com/learn/courses/founder-brand-compounding): human build guide for this pack
 
 ## Free, no signup
 
-- **[LinkedIn Post Critic](https://jaymountconsulting.com/tools/linkedin-post-critic)** — the same job as this pack, hosted. No account, no key.
+- **[LinkedIn Post Critic](https://jaymountconsulting.com/tools/linkedin-post-critic)**: the same job as this pack, hosted. No account, no key.
 - [Founder-Led Social Selling framework](https://jaymountconsulting.com/frameworks/founder-led-social-selling)
 - [Prompt Library](https://jaymountconsulting.com/resources/prompt-library)
 
 ## Free, by email
 
-[**Growth Audit**](https://jaymountconsulting.com/growth-audit) — where your go-to-market stack is leaking, sent to your inbox.
+[**Growth Audit**](https://jaymountconsulting.com/growth-audit): where your go-to-market stack is leaking, sent to your inbox.
 
 That one does ask for an email, and it enrols you in a short follow-up on the same topic. Unsubscribe whenever.
 
-[**The Friday Signal**](https://jaymountconsulting.com/newsletter/signal): free emails on building GTM systems that compound. No pitch in it. One click unsubscribes.
+[**The Friday Signal**](https://jaymountconsulting.com/newsletter/signal): free emails on building GTM systems. No pitch in it. One click unsubscribes.
 
 ## Privacy and security
 
@@ -154,4 +154,4 @@ MIT. See [LICENSE](./LICENSE).
 
 ## About
 
-Built by [Jay Mount Consulting](https://jaymountconsulting.com).
+Built by [JMC Go-to-Market Systems](https://jaymountconsulting.com).

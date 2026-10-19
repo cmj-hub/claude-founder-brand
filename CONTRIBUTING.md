@@ -5,21 +5,21 @@ before you contribute.
 
 ## What kinds of contributions land
 
-- **Bug reports** — open an issue with a reproducible case. The
+- **Bug reports**: open an issue with a reproducible case. The
   scripts in `scripts/` are deterministic, so bugs there are usually
   one-line fixes.
 - **New modes** (`skills/founder-brand/modes/<mode>.md`) that extend the existing framework. Discuss in
   an issue first if it's a substantial addition.
-- **Calibration improvements** to the scoring scripts — if you can
+- **Calibration improvements** to the scoring scripts: if you can
   show a case where the script scores wrong, that's gold.
-- **Cross-runtime ports** (Cursor, Gemini CLI, Codex) — ship as
+- **Cross-runtime ports** (Cursor, Gemini CLI, Codex): ship as
   separate plugins; clone this repo to work on the files locally.
 - **Translation** of the framework reference docs.
 
 ## What doesn't land
 
 - Renaming the JMC framework concepts (Signal → Pain → EVP → Ask, the
-  5 Schwartz tiers, the 4 content pillars) — these are course-anchored.
+  5 Schwartz tiers, the 4 content pillars): these are course-anchored.
 - Adding LLM calls inside the skills. The whole point is that the
   skills are deterministic.
 - Adding third-party packages to scripts. Scripts must work with the
@@ -60,7 +60,7 @@ If `score_post.py` scores something obviously wrong:
 
 New calibration cases go in `tests/test_scoring.py` alongside the
 lexicon change in `score_post.py`. The examples in `examples/` are
-pinned (100 and 37) — a change that moves them updates the README too.
+pinned (100 and 37): a change that moves them updates the README too.
 
 ## License
 
@@ -69,5 +69,5 @@ license already on this repo.
 
 ## About
 
-Built by [Jay Mount Consulting](https://jaymountconsulting.com).
-Part of the JMC public-build spine — see [/build](https://jaymountconsulting.com/build).
+Built by [JMC Go-to-Market Systems](https://jaymountconsulting.com).
+Part of the JMC public-build spine: see [/build](https://jaymountconsulting.com/build).

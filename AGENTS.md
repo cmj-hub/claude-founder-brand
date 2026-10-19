@@ -25,7 +25,7 @@
 ## Where things live
 
 - Operator files: `brand-config.json`, `SOUL.md`, `drafts/` in the operator's project folder. This pack keeps `drafts/` rather than the suite's `gtm/` folder, for back-compat.
-- Templates: `SOUL.md` and `brand-config.example.json` in this repo. The example values are Jay Mount Consulting's, not the operator's.
+- Templates: `SOUL.md` and `brand-config.example.json` in this repo. The example values are JMC Go-to-Market Systems's, not the operator's.
 - Scorer: `python3 scripts/score_post.py --file <draft> --soul SOUL.md`
 - State: `python3 scripts/check_setup.py --dir .`
 
