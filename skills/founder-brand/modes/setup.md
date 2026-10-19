@@ -49,8 +49,8 @@ If this pack's fields or sections already exist, this is a
 **refresh**: read them, show what's there step by step, and change only
 what the operator changes.
 
-The example values in the templates (PSP, Series-B SaaS, JMC URLs) are
-JMC's. None of them survive into the operator's files
+The example values in the templates (PSP, Series-B SaaS, client results, URLs) are
+fictional placeholders, not JMC results. None of them survive into the operator's files
 unless the operator says they're true for them.
 
 ## Workflow
@@ -159,7 +159,7 @@ or more stories.
 Give me 3-5 specific receipts you can cite. Anonymized but specific.
 These become the case-study reservoir every Proof-pillar post pulls from.
 
-Examples:
+Examples (fictional, replace with your own):
   "The Series-B SaaS that hit 14 SQLs in 30 days from a PSP rewrite"
   "The bootstrapped agency that went 2% → 11% reply rate"
   "The DevTools company that closed $80k ACV in 90 days after EVP retier"

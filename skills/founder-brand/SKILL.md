@@ -71,11 +71,11 @@ pillar for 4+ weeks (drift). The 4 pillars:
 | # | Pillar | Job | Example |
 |---|---|---|---|
 | 1 | **Pillar** | Big claim / point of view / contrarian take | "We don't run cold email programs that don't anchor on a PSP. Here's why." |
-| 2 | **Proof** | Case study / specific metric / receipt | "Series-B SaaS — 14 SQLs in 30 days from one PSP rewrite. Here's the breakdown." |
+| 2 | **Proof** | Case study / specific metric / receipt | "Series-B SaaS — 14 SQLs in 30 days from one PSP rewrite. Here's the breakdown." (fictional example) |
 | 3 | **Process** | How you actually do the work / SOP / framework | "Our 7-step Pain Signal Profile worksheet, with the 3 places teams get stuck." |
 | 4 | **Person** | The human behind the work — story, stake, reason you care | "I shipped 3 outbound programs that failed before I figured out the PSP layer." |
 
-The examples are JMC's. The operator's pillars come
+The examples are fictional: the clients, results and figures in them are made up, and none is a JMC result. The operator's pillars come
 from `brand-config.json` → `pillars.<pillar>.topic_pool`.
 
 ## The 5 hook archetypes

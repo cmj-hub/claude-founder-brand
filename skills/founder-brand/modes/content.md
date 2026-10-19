@@ -138,7 +138,7 @@ Write to `drafts/<YYYY-MM-DD>-<pillar>-<slug>.md` in the project folder:
 date: 2026-10-05
 pillar: proof
 hook: specific_receipt
-topic: "Series-B SaaS hit 14 SQLs in 30 days from a PSP rewrite"
+topic: "Series-B SaaS hit 14 SQLs in 30 days from a PSP rewrite"   # fictional example
 receipt: "SOUL.md → Stories I lean on #1"
 score: 96
 status: draft
