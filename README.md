@@ -57,6 +57,23 @@ npx skills add cmj-hub/claude-founder-brand --all -g --full-depth
 
 The one skill lives at `skills/founder-brand/SKILL.md`, so the repo also loads as a Claude Code plugin from a local clone. The scorer is Python 3 in this repo, standard library only.
 
+### From npm
+
+The same pack is on npm as [`@jmc-gtm/claude-founder-brand`](https://www.npmjs.com/package/@jmc-gtm/claude-founder-brand), released from this repo's version tags with npm provenance. It has no dependencies and no install scripts.
+
+In a project, for any agent host the skills installer knows (`experimental_sync` is still marked experimental there):
+
+```bash
+npm install -D @jmc-gtm/claude-founder-brand
+npx skills experimental_sync -a claude-code -y
+```
+
+In your own Claude Code plugin marketplace, point an entry at the package:
+
+```json
+{ "name": "founder-brand", "source": { "source": "npm", "package": "@jmc-gtm/claude-founder-brand" } }
+```
+
 ## What's in the pack
 
 One skill, `founder-brand`. It loads your `brand-config.json` + `SOUL.md` and routes by argument: `/founder-brand:founder-brand <mode>`.

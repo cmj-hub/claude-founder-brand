@@ -1,15 +1,32 @@
 {
-  "name": "jmc-founder-brand",
+  "name": "@jmc-gtm/claude-founder-brand",
   "version": "0.7.0",
-  "description": "Founder brand is a four-pillar rotation: Pillar, Proof, Process, Person: written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
+  "description": "Founder brand is a four-pillar rotation. Pillar, Proof, Process, Person: written in the founder's voice. It refuses thought-leader cadence, engagement bait, and AI-detection filler.",
   "license": "MIT",
-  "bin": {
-    "jmc-founder-brand": "./install.sh"
+  "author": "JMC Go-to-Market Systems",
+  "homepage": "https://github.com/cmj-hub/claude-founder-brand#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmj-hub/claude-founder-brand.git"
   },
-  "scripts": {
-    "smoke": "bash scripts/smoke-test.sh",
-    "test": "python3 -m unittest discover -s tests -v"
+  "bugs": {
+    "url": "https://github.com/cmj-hub/claude-founder-brand/issues"
   },
+  "keywords": [
+    "agent-skills",
+    "claude-code",
+    "claude-plugin",
+    "cursor",
+    "codex",
+    "grok",
+    "linkedin",
+    "founder-brand",
+    "b2b",
+    "founder-led-social",
+    "personal-brand",
+    "content-engine",
+    "gtm"
+  ],
   "files": [
     ".claude-plugin",
     "skills",
@@ -20,27 +37,14 @@
     "brand-config.example.json",
     "README.md",
     "LICENSE",
-    "install.sh"
+    "CHANGELOG.md",
+    "!scripts/install.sh",
+    "!scripts/install.ps1",
+    "!scripts/smoke-test.sh",
+    "!scripts/validate-skill-frontmatter.py"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cmj-hub/claude-founder-brand.git"
-  },
-  "homepage": "https://jaymountconsulting.com/skills",
-  "bugs": {
-    "url": "https://github.com/cmj-hub/claude-founder-brand/issues"
-  },
-  "keywords": [
-    "agent-skills",
-    "claude-code",
-    "cursor",
-    "codex",
-    "grok",
-    "linkedin",
-    "founder-brand",
-    "b2b"
-  ],
-  "engines": {
-    "node": ">=18"
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
